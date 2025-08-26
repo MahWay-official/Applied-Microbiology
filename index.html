@@ -5,34 +5,295 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Applied Microbiology Mega Quiz — Full 100</title>
 <style>
-  body{font-family:Arial,Helvetica,sans-serif;background:#f3f7fb;margin:0;padding:0;color:#123;}
-  header{background:linear-gradient(90deg,#4facfe,#00f2fe);padding:18px;text-align:center;color:#fff;font-weight:800}
-  .wrap{max-width:980px;margin:18px auto;padding:12px}
-  .question{padding:12px;border-radius:10px;margin-top:12px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.04)}
-  .qhead{font-weight:800;margin:0 0 6px}
-  .options label{display:block;margin:6px 0;padding:8px;border-radius:8px;border:1px solid #e9eef6;cursor:pointer;user-select:none}
-  .options input{margin-left:8px}
-  .feedback{margin-top:8px;font-weight:700}
-  .correct{color:green}
-  .incorrect{color:red}
-  #mouse{position:fixed;bottom:18px;left:-360px;width:160px;transition:left .6s;z-index:9999}
-  .toast{position:fixed;bottom:200px;left:18px;background:rgba(0,0,0,.85);color:#fff;padding:10px 14px;border-radius:12px;font-weight:700;display:none;z-index:10000;max-width:60%;}
-  .controls{text-align:center;margin:20px 0;}
-  button{background:#4facfe;border:none;color:#fff;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;margin-right:8px;}
-  button.secondary{background:#eef3fb;color:#123;border:1px solid #d6e9fb}
+  :root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --light-bg: #ecf0f1;
+    --dark-text: #2c3e50;
+    --light-text: #ffffff;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 8px rgba(0,0,0,0.1);
+    --correct-color: #27ae60;
+    --incorrect-color: #e74c3c;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--light-bg);
+    margin: 0;
+    padding: 0;
+    color: var(--dark-text);
+    line-height: 1.6;
+  }
+  
+  header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 20px;
+    text-align: center;
+    color: var(--light-text);
+    font-weight: 800;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent-color);
+  }
+  
+  .wrap {
+    max-width: 980px;
+    margin: 25px auto;
+    padding: 20px;
+  }
+  
+  .intro {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--secondary-color);
+  }
+  
+  .question {
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+  }
+  
+  .question:hover {
+    transform: translateY(-3px);
+  }
+  
+  .qhead {
+    font-weight: 800;
+    margin: 0 0 12px;
+    color: var(--primary-color);
+    font-size: 1.1em;
+  }
+  
+  .options label {
+    display: block;
+    margin: 10px 0;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+    background: #f9f9f9;
+  }
+  
+  .options label:hover {
+    background: #edf7ff;
+    border-color: var(--secondary-color);
+  }
+  
+  .options input {
+    margin-right: 10px;
+  }
+  
+  .feedback {
+    margin-top: 15px;
+    font-weight: 700;
+    padding: 15px;
+    border-radius: 8px;
+    line-height: 1.5;
+  }
+  
+  .correct {
+    color: var(--correct-color);
+    background-color: rgba(39, 174, 96, 0.1);
+    border-left: 4px solid var(--correct-color);
+  }
+  
+  .incorrect {
+    color: var(--incorrect-color);
+    background-color: rgba(231, 76, 60, 0.1);
+    border-left: 4px solid var(--incorrect-color);
+  }
+  
+  #mouse {
+    position: fixed;
+    bottom: 20px;
+    left: -360px;
+    width: 160px;
+    transition: left 0.6s;
+    z-index: 9999;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  }
+  
+  .toast {
+    position: fixed;
+    bottom: 200px;
+    left: 20px;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    display: none;
+    z-index: 10000;
+    max-width: 60%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  
+  .controls {
+    text-align: center;
+    margin: 30px 0;
+  }
+  
+  button {
+    background: var(--secondary-color);
+    border: none;
+    color: var(--light-text);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+  }
+  
+  button:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+  }
+  
+  button.secondary {
+    background: var(--light-bg);
+    color: var(--dark-text);
+    border: 1px solid #ddd;
+  }
+  
+  button.secondary:hover {
+    background: #dce4e6;
+  }
+  
+  #score {
+    font-weight: 800;
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: var(--primary-color);
+  }
+  
+  .sponsorship {
+    background: linear-gradient(135deg, var(--primary-color), #2a4b7c);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    margin-top: 50px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+  }
+  
+  .sponsorship h2 {
+    margin-top: 0;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .sponsorship p {
+    max-width: 700px;
+    margin: 0 auto 25px;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  
+  .sponsor-button {
+    display: inline-block;
+    background: var(--accent-color);
+    color: white;
+    padding: 14px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .sponsor-button:hover {
+    background: #c0392b;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  }
+  
+  .sponsor-logo {
+    max-width: 200px;
+    margin: 0 auto 25px;
+    display: block;
+    filter: brightness(0) invert(1);
+  }
+  
+  footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    color: #7f8c8d;
+    font-size: 0.9em;
+    border-top: 1px solid #ddd;
+  }
+  
+  @media (max-width: 768px) {
+    .wrap {
+      padding: 15px;
+      margin: 15px auto;
+    }
+    
+    .question {
+      padding: 15px;
+    }
+    
+    .options label {
+      padding: 10px;
+    }
+    
+    .toast {
+      max-width: 80%;
+      left: 10px;
+      right: 10px;
+      margin: 0 auto;
+    }
+    
+    #mouse {
+      width: 120px;
+    }
+  }
 </style>
 </head>
 <body>
-<header>Applied Microbiology Mega Quiz — 100 Questions</header>
+<header>
+  <h1>Applied Microbiology Mega Quiz — 100 Questions</h1>
+</header>
 <div class="wrap">
-  <div>Questions & choices are in <b>English</b>. Wrong answer → you'll see the correct one plus a short explanation. Correct answer → Dr. Mouse appears with a motivating phrase in Egyptian Arabic.</div>
+  <div class="intro">
+    <p>Questions & choices are in <b>English</b>. Wrong answer → you'll see the correct one plus a short explanation. Correct answer → Dr. Mouse appears with a motivating phrase in Egyptian Arabic.</p>
+  </div>
 
   <div id="quiz"></div>
 
   <div class="controls">
       <button id="calc">Calculate Score</button>
-      <button id="reset" class="secondary">Reset</button>
-      <div id="score" style="font-weight:800;margin-top:10px"></div>
+      <button id="reset" class="secondary">Reset Quiz</button>
+      <div id="score"></div>
+  </div>
+  
+  <div class="sponsorship">
+    <h2>Supported by Mahway</h2>
+    <p>This educational resource is made possible through the generous support of Mahway. Visit their website to discover more innovative learning solutions.</p>
+    <a href="https://mahway-official.github.io/Personal/" class="sponsor-button">Visit Mahway</a>
   </div>
 </div>
 
@@ -40,7 +301,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
-const questions = [{"q": "Which medium is liquid in physical state?", "options": ["Nutrient broth", "Nutrient agar", "Motility agar (deep)", "Blood agar"], "answer": 0, "explanation": "الـ broth وسط سائل، ونمو البكتيريا فيه بيظهر كعكارة (turbidity)."}, {"q": "In semi-solid media, non-motile bacteria typically grow as:", "options": ["Turbidity throughout", "Isolated colonies", "Spreading feather-like growth", "Along the stab line only"], "answer": 3, "explanation": "في الوسط شبه الصلب، البكتيريا غير المتحركة بتظهر كنمو على خط الغرز فقط."}, {"q": "Bacterial colonies are seen on:", "options": ["Liquid media", "Solid media", "Candle jar", "Anaerobic jar"], "answer": 1, "explanation": "المستعمرات بتتكون على الأوساط الصلبة زي nutrient/blood agar."}, {"q": "MacConkey agar is best described as:", "options": ["Simple medium", "Enriched medium", "Selective & Differential medium", "Transport medium"], "answer": 2, "explanation": "MacConkey بيمنع Gram+ (bile salts & crystal violet) ويفرق lactose fermenters بـ Neutral red."}, {"q": "Indicator used in MacConkey agar is:", "options": ["Phenol red", "Neutral red", "Bromothymol blue", "Methylene blue"], "answer": 1, "explanation": "الـ indicator في MacConkey هو Neutral red لتمييز تخمير اللاكتوز."}, {"q": "Selective agents in MacConkey agar are:", "options": ["NaCl 7.5%", "Bile salts & crystal violet", "Antibiotics mix", "Eosin & methylene blue"], "answer": 1, "explanation": "أملاح الصفراء وCrystal violet تمنع أغلب الـGram positive."}, {"q": "Mannitol Salt Agar (MSA) is:", "options": ["Enriched only", "Selective & Differential", "Simple", "Transport"], "answer": 1, "explanation": "MSA فيه 7.5% NaCl (selective للـStaphylococci) وPhenol red يفرق تخمير المانيتول."}, {"q": "The carbohydrate and indicator in MSA are respectively:", "options": ["Lactose & Neutral red", "Glucose & Bromothymol blue", "Mannitol & Phenol red", "Sucrose & Methyl red"], "answer": 2, "explanation": "MSA: مانيتول + Phenol red."}, {"q": "EMB agar is commonly used for:", "options": ["Fungi", "Staphylococci", "Enteric Gram-negative bacilli", "Anaerobes"], "answer": 2, "explanation": "EMB انتقائي/تفريقي للأمعائيات (Gram-)، وتعطي E. coli لمعان معدني."}, {"q": "Which shows a metallic green sheen on EMB?", "options": ["Staphylococcus aureus", "Enterococcus faecalis", "Escherichia coli", "Pseudomonas aeruginosa"], "answer": 2, "explanation": "E. coli على EMB غالبًا بيظهر metallic green sheen لتخمير قوي."}, {"q": "Blood agar is primarily considered:", "options": ["Simple medium", "Enriched medium", "Selective medium", "Transport medium"], "answer": 1, "explanation": "Blood agar وسط مُغذّي (enriched) ويمكّن أيضًا التفريق بالتحلل الدموي."}, {"q": "Chocolate agar supports growth of:", "options": ["Fastidious organisms like Neisseria", "Strict anaerobes", "Fungi only", "Thermophiles"], "answer": 0, "explanation": "Chocolate agar (دم مُحلل) يدعم النيسيريا والهيموفيلس (كائنات متطلبة)."}, {"q": "Thayer–Martin medium is used to isolate:", "options": ["Haemophilus influenzae", "Neisseria gonorrhoeae", "Streptococcus pyogenes", "Clostridium perfringens"], "answer": 1, "explanation": "Thayer–Martin (Chocolate + مضادات) انتقائي للنيسيريا."}, {"q": "Cetrimide agar is selective for:", "options": ["Pseudomonas aeruginosa", "E. coli", "Salmonella Typhi", "Staphylococcus aureus"], "answer": 0, "explanation": "Cetrimide agar ينتقي Pseudomonas aeruginosa ويعزز صبغة البيوفيردين."}, {"q": "Selenite F broth is an example of:", "options": ["Simple medium", "Transport medium", "Enrichment broth", "Differential agar"], "answer": 2, "explanation": "Selenite F بيُثري السالمونيلا من عينات مختلطة قبل العزل."}, {"q": "Which is a simple medium?", "options": ["Simmons citrate agar", "Nutrient agar", "Blood agar", "MacConkey agar"], "answer": 1, "explanation": "Nutrient agar وسط بسيط غير انتقائي."}, {"q": "Transport media such as Stuart/Amies are designed to:", "options": ["Promote rapid growth", "Maintain viability without multiplication", "Select for Gram-negative rods", "Detect hemolysis"], "answer": 1, "explanation": "الـ Transport media بتحافظ على العينة حيّة بدون تكاثر لحين الزراعة."}, {"q": "TSI agar is mainly used to:", "options": ["Detect hemolysis", "Assess sugar fermentation and H2S in enterics", "Determine salt tolerance", "Grow anaerobes"], "answer": 1, "explanation": "TSI يفرّق بين أمعائيات حسب تخمير السكريات وإنتاج H2S وغاز."}, {"q": "Which plate is commonly used for antibiotic susceptibility testing?", "options": ["Sabouraud agar", "Mueller–Hinton agar", "Chocolate agar", "Nutrient agar"], "answer": 1, "explanation": "Mueller–Hinton هو المعيار لاختبار الحساسية (Kirby–Bauer)."}, {"q": "Which statement about Sabouraud dextrose agar is true?", "options": ["Selective for Gram- rods", "Favours fungi/yeasts by low pH", "Differential for lactose fermenters", "Contains blood"], "answer": 1, "explanation": "سابورو منخفض pH وغني بالسكريات ليدعم نمو الفطريات."}, {"q": "Streak plate method is primarily for:", "options": ["Measuring zone of inhibition", "Obtaining isolated colonies", "Demonstrating motility", "Growing anaerobes"], "answer": 1, "explanation": "الـ Streak plate بتوزّع البكتيريا لتكوين مستعمرات منفصلة لعزل نقي."}, {"q": "Lawn culture provides:", "options": ["Isolated colonies", "Uniform confluent growth", "Anaerobic conditions", "Hemolysis only"], "answer": 1, "explanation": "Lawn culture بيعمل طبقة نمو موحدة ومهم في اختبار الحساسية."}, {"q": "Stab inoculation is done in:", "options": ["Liquid broth", "Slant agar", "Semi-solid deep", "Plate surface"], "answer": 2, "explanation": "Stab بيتعمل في عمق وسط شبه صلب لتقييم الحركة/الأكسجين."}, {"q": "Stroke inoculation refers to:", "options": ["Aseptic flaming", "Surface streaking on a plate", "Gentle zigzag on slant surface", "Deep puncture in agar"], "answer": 2, "explanation": "Stroke هو تلقيح بلمسة/تمرير على سطح الـslant."}, {"q": "GasPak jar is used to create:", "options": ["Microaerophilic conditions", "Strict anaerobiosis", "High humidity only", "High temperature"], "answer": 1, "explanation": "GasPak مع محفّز البلاديوم يستهلك الأكسجين ويولّد جو لاهوائي."}, {"q": "Candle jar is best for:", "options": ["Strict anaerobes", "Capnophiles/microaerophiles", "Thermophiles", "Halophiles"], "answer": 1, "explanation": "Candle jar يقلل O2 ويرفع CO2 فيفيد الكائنات المحبة لثاني أكسيد الكربون."}, {"q": "Which technique reduces contamination risk?", "options": ["Leaving plates open", "Touching loop before flaming", "Aseptic flaming and minimizing exposure", "Pipetting by mouth"], "answer": 2, "explanation": "التقنيات العقيمة تشمل التعقيم باللهب وتقليل تعريض الوسط للهواء."}, {"q": "During streaking for isolation, you typically divide the plate into:", "options": ["2 sectors", "3–4 sectors", "6 sectors", "No sectors"], "answer": 1, "explanation": "تقسيم 3-4 مناطق يقلل الكثافة تدريجيًا للحصول على عزلات منفصلة."}, {"q": "For Kirby–Bauer testing, the inoculum is standardized to:", "options": ["1.5 McFarland", "0.5 McFarland", "3.0 McFarland", "No standard needed"], "answer": 1, "explanation": "المعيار الشائع 0.5 McFarland لضمان كثافة موحدة."}, {"q": "Why incubate plates inverted (agar up)?", "options": ["Better color", "Avoids condensation dripping onto surface", "Faster growth", "Prevents contamination by CO2"], "answer": 1, "explanation": "القلب يمنع سقوط تكاثف الماء الذي قد يسيّح المستعمرات."}, {"q": "Which method gives a uniform lawn for AST?", "options": ["Streak with loop", "Swabbing in three directions on MH agar", "Single stab", "Pouring molten agar"], "answer": 1, "explanation": "المسحة في ثلاث اتجاهات على Mueller–Hinton تعطي سطحًا موحدًا."}, {"q": "McIntosh–Fildes jar is used for:", "options": ["Fungi", "Aerobes", "Anaerobes", "Thermophiles"], "answer": 2, "explanation": "McIntosh–Fildes jar يوفّر جو لاهوائي باستخدام تفريغ وتحفيز."}, {"q": "A loop should be cooled before touching culture to:", "options": ["Increase colonies", "Prevent aerosol only", "Avoid killing bacteria and aerosols", "Speed up streaking"], "answer": 2, "explanation": "تبريد اللوب بعد التعقيم يمنع قتل البكتيريا وتكوين رذاذ."}, {"q": "Pour plate technique is useful to:", "options": ["Count viable colonies (CFU)", "Create lawn", "Test motility", "AST only"], "answer": 0, "explanation": "الـ Pour plate بيساعد في عدّ وحدات تكوين المستعمرات."}, {"q": "Best vessel for broth cultivation is:", "options": ["Slant tube", "Petri dish", "Screw-cap tube/flask", "Agar deep"], "answer": 2, "explanation": "الوسط السائل يُحضن في أنابيب/فلاسكات محكمة لتجنّب التلوث."}, {"q": "Gram-positive bacteria appear after Gram staining as:", "options": ["Red/Pink", "Purple/Blue", "Colorless", "Green"], "answer": 1, "explanation": "Gram+ تحتفظ بمركب CV-I داخل الجدار السميك فتظهر بنفسجي/أزرق."}, {"q": "Correct order in Gram stain is:", "options": ["Iodine → Crystal violet → Safranin → Alcohol", "Crystal violet → Iodine → Alcohol → Safranin", "Crystal violet → Alcohol → Iodine → Safranin", "Safranin → Alcohol → Crystal violet → Iodine"], "answer": 1, "explanation": "الترتيب: صبغة أساسية CV ثم Iodine ثم إزالة اللون بالكحول ثم Safranin."}, {"q": "Mordant used in Gram stain:", "options": ["Iodine", "Heat", "Acid-alcohol", "Phenol"], "answer": 0, "explanation": "اليود يثبّت البلّورة البنفسجية بتكوين مركب CV-I."}, {"q": "Decolorizer in Gram stain is commonly:", "options": ["Water", "Ethanol/Acetone", "Acid-alcohol", "KOH"], "answer": 1, "explanation": "الكحول/الأسيتون يزيل اللون من Gram- ذات الجدار الرقيق."}, {"q": "Counterstain in Gram stain is:", "options": ["Methylene blue", "Carbol fuchsin", "Safranin", "Malachite green"], "answer": 2, "explanation": "الـ Safranin تلوّن Gram- بالوردي/الأحمر."}, {"q": "Ziehl–Neelsen stain primarily detects:", "options": ["Spores", "Acid-fast bacteria", "Capsules", "Flagella"], "answer": 1, "explanation": "Ziehl–Neelsen تكشف الـ Acid-fast مثل Mycobacterium."}, {"q": "Primary stain in acid-fast staining:", "options": ["Crystal violet", "Carbol fuchsin", "Methylene blue", "Safranin"], "answer": 1, "explanation": "Carbol fuchsin صبغة أساسية تُسخَّن لاختراق الجدار الشمعي."}, {"q": "Mordant in classical Ziehl–Neelsen is:", "options": ["Iodine", "Heat", "Acid-alcohol", "Phenol red"], "answer": 1, "explanation": "التسخين يعمل كمُثبِّت/مُسهّل لاختراق الصبغة."}, {"q": "Decolorizer in acid-fast staining is:", "options": ["Alcohol", "Acid-alcohol", "Water", "Acetone"], "answer": 1, "explanation": "Acid-alcohol يزيل اللون من غير الحمضية فقط."}, {"q": "Counterstain in acid-fast staining:", "options": ["Safranin", "Methylene blue", "Crystal violet", "Malachite green"], "answer": 1, "explanation": "Methylene blue يصبغ غير الحمضية باللون الأزرق."}, {"q": "Acid-fast bacteria appear:", "options": ["Blue after staining", "Red after staining", "Green", "Colorless"], "answer": 1, "explanation": "الكائنات الحمضية تمسك Carbol fuchsin وتظهر حمراء."}, {"q": "Reason for acid-fastness:", "options": ["Thick peptidoglycan", "Mycolic acids in cell wall", "Teichoic acids", "Capsule"], "answer": 1, "explanation": "الأحماض الميكولية الدهنية تمنع إزالة اللون."}, {"q": "Over-decolorization in Gram stain may cause:", "options": ["False Gram-positive", "False acid-fast", "False Gram-negative", "No effect"], "answer": 2, "explanation": "الإزالة المفرطة قد تجعل Gram+ تظهر كأنها Gram-."}, {"q": "Old cultures of Gram-positive may appear:", "options": ["Gram-variable or Gram-negative", "Always purple", "Acid-fast", "Non-stainable"], "answer": 0, "explanation": "قدم العينة قد يضعف الجدار ويعطي Gram-variable."}, {"q": "Kinyoun method differs by:", "options": ["Using no heat (cold method)", "No counterstain", "No decolorizer", "Using iodine as mordant"], "answer": 0, "explanation": "Kinyoun يزيد الفينول/الصبغة بدل التسخين (طريقة باردة)."}, {"q": "Catalase test reagent is:", "options": ["H2O", "H2O2", "KOH", "Nitrate broth"], "answer": 1, "explanation": "نستخدم بيروكسيد الهيدروجين H2O2 ويظهر فقاعات إذا كان الإنزيم موجود."}, {"q": "Catalase positive cocci include:", "options": ["Streptococci", "Enterococci", "Staphylococci", "Lactococci"], "answer": 2, "explanation": "الستاف إيجابي كاتالاز؛ الستربتو/إنترو نيجاتيف."}, {"q": "Coagulase test helps identify:", "options": ["Staphylococcus aureus", "Staphylococcus epidermidis", "Streptococcus pyogenes", "Enterococcus faecalis"], "answer": 0, "explanation": "S. aureus عادة إيجابي Coagulase بينما S. epidermidis سلبي."}, {"q": "Oxidase test detects presence of:", "options": ["Cytochrome c oxidase", "Catalase", "Coagulase", "Peroxidase"], "answer": 0, "explanation": "اختبار الأكسيداز يكشف إنزيم cytochrome c oxidase."}, {"q": "Common oxidase reagent that turns purple is:", "options": ["Kovac’s reagent", "Barritt’s A", "Tetramethyl-p-phenylenediamine (TMPD)", "Ferric chloride"], "answer": 2, "explanation": "TMPD يتأكسد إلى indophenol أزرق/بنفسجي."}, {"q": "Indole test detects enzyme:", "options": ["Urease", "Tryptophanase", "Citrate permease", "Decarboxylase"], "answer": 1, "explanation": "التربتوفاناز يحوّل التربتوفان لإندول؛ يظهر بحلقة حمراء مع Kovac’s."}, {"q": "Positive indole reaction appears as:", "options": ["Blue slant", "Black precipitate", "Red ring at top", "Green slant"], "answer": 2, "explanation": "حلقة حمراء عليا مع كوافاك تعني إنتاج إندول."}, {"q": "Methyl Red positive indicates:", "options": ["Strong acid production (mixed-acid fermentation)", "Acetoin production", "Citrate utilization", "Urea hydrolysis"], "answer": 0, "explanation": "MR موجب يعني حموضة ثابتة (E. coli غالبًا)."}, {"q": "Voges–Proskauer (VP) detects:", "options": ["Lactose fermentation", "Acetoin (2,3-butanediol pathway)", "H2S production", "Gas only"], "answer": 1, "explanation": "VP يكشف الأسيتوين باستخدام كاشفي بارِت."}, {"q": "Barritt’s reagents are:", "options": ["Alpha-naphthol & KOH", "Kovac’s & HCl", "Ferric chloride & HCl", "Sulfanilic acid & α-naphthylamine"], "answer": 0, "explanation": "VP: ألفا نافثول + KOH لأكسدة الأسيتوين للون الأحمر."}, {"q": "Simmons citrate test uses indicator:", "options": ["Phenol red", "Bromothymol blue", "Neutral red", "Methyl red"], "answer": 1, "explanation": "بروموثيمول بلو يتحول لأزرق عند قلوية نتيجة استخدام السترات."}, {"q": "Citrate positive appears as:", "options": ["Deep red ring", "Blue slant/growth", "Black butt", "Pink broth"], "answer": 1, "explanation": "نمو ولون أزرق يدل على استخدام السترات كمصدر وحيد للكربون."}, {"q": "Urease positive reaction:", "options": ["Medium turns pink", "Medium turns blue", "Black precipitate", "Gas bubbles only"], "answer": 0, "explanation": "هيدروlysis اليوريا ينتج NH3 يرفع pH فيحوّل Phenol red للوردي."}, {"q": "Rapid urease positive genus is:", "options": ["Escherichia", "Proteus", "Salmonella", "Shigella"], "answer": 1, "explanation": "Proteus مشهور بنشاط يورييز سريع → لون وردي قوي."}, {"q": "TSI K/A with H2S means:", "options": ["Lactose fermenter", "Glucose only fermentation, H2S produced", "No sugar used", "Sucrose only"], "answer": 1, "explanation": "K/A: قلوية slant وحموضة butt = جلوكوز فقط + H2S أسود."}, {"q": "Gas production in TSI appears as:", "options": ["Blue color", "Cracks/lifting of agar", "Blackening", "Green sheen"], "answer": 1, "explanation": "الغاز يعمل شقوق ورفع للآجار."}, {"q": "H2S indicator system in TSI involves:", "options": ["Ferric ions & thiosulfate", "Neutral red & lactose", "Phenol red only", "Bile salts"], "answer": 0, "explanation": "يتكوّن راسب أسود (FeS) من كبريتيد الهيدروجين مع الحديد."}, {"q": "Typical H2S producer among enterics:", "options": ["Salmonella enterica", "Shigella sonnei", "Escherichia coli", "Klebsiella pneumoniae"], "answer": 0, "explanation": "السالمونيلا غالبًا تنتج H2S، بينما الشيجلا لا."}, {"q": "Nitrate reduction test: red after adding reagents A & B indicates:", "options": ["No reduction", "Reduction to nitrite", "Complete reduction to nitrogen", "Contamination"], "answer": 1, "explanation": "اللون الأحمر بعد A+B يعني وجود نيتريت ناتج عن الاختزال."}, {"q": "If no color after A & B, red only after zinc indicates:", "options": ["Positive complete reduction", "Negative (nitrate still present)", "Inconclusive", "Contamination"], "answer": 1, "explanation": "الزنك يختزل النترات لنّيتريت ويُظهر الأحمر → يعني البكتيريا لم تختزلها (سلبي)."}, {"q": "If still colorless even after zinc, that indicates:", "options": ["Positive (reduced beyond nitrite)", "Negative", "Invalid", "Gram-variable"], "answer": 0, "explanation": "بدون لون بعد الزنك → النترات اختُزلت لغاز N2/أمونيا (اختزال كامل)."}, {"q": "Phenylalanine deaminase (PAD) positive turns:", "options": ["Green with ferric chloride", "Pink with phenol red", "Black with H2S", "Blue with BTB"], "answer": 0, "explanation": "نزع أمين الفينيل ألانين يعطي لون أخضر مع كلوريد الحديديك (مثبت في Proteus)."}, {"q": "DNase test positive shows:", "options": ["Black precipitate", "Clear zone around growth", "Gas bubbles", "Metallic sheen"], "answer": 1, "explanation": "تحلّل DNA يسبب منطقة شفافة حول النمو على DNase agar (S. aureus)."}, {"q": "Bile esculin positive appears as:", "options": ["Green slant", "Blackening of medium", "Pink broth", "No change"], "answer": 1, "explanation": "تحلّل الإسكولين بوجود بيل يعطي مركبات مع الحديد تُسود الوسط (Enterococcus)."}, {"q": "Motility in a semi-solid medium is seen as:", "options": ["Growth only along stab line", "Diffuse hazy spread from the line", "Colonies on surface", "Black butt"], "answer": 1, "explanation": "الحركة تُرى كانتشار عكاري بعيدًا عن خط الغرز."}, {"q": "Which combination identifies S. aureus among staphylococci?", "options": ["Catalase– & Coagulase–", "Catalase+ & Coagulase+", "Oxidase+ & Catalase–", "Urease+ & MR+"], "answer": 1, "explanation": "S. aureus عادةً Catalase+ وCoagulase+."}, {"q": "Why avoid scraping colonies from blood agar for catalase slide test?", "options": ["Too many colonies", "RBC catalase may give false positive", "Plate dries quickly", "Indicator interferes"], "answer": 1, "explanation": "كريات الدم الحمراء فيها كاتالاز → فقاعات خاطئة."}, {"q": "Kovac’s reagent is used in:", "options": ["Indole test", "MR test", "VP test", "Citrate test"], "answer": 0, "explanation": "كوافاك يُظهر حلقة الإندول الحمراء."}, {"q": "Enterobacter/Klebsiella are typically:", "options": ["MR+ VP–", "MR– VP+", "MR+ VP+", "MR– VP–"], "answer": 1, "explanation": "عادة MR سلبي وVP إيجابي لمسار 2,3-بوتانديول."}, {"q": "E. coli profile among IMViC is often:", "options": ["++--", "--++", "+--+", "-+-+"], "answer": 0, "explanation": "IMViC لإيشيريشيا كولي غالبًا Indole+, MR+, VP–, Citrate– (أي ++--).},       {q:\\\"Urease negative among these is most likely:\\\", options:[\\\"Proteus mirabilis\\\",\\\"Klebsiella pneumoniae\\\",\\\"Escherichia coli\\\",\\\"Morganella morganii\\\"], answer:2, explanation:\\\"E. coli عادة سلبي يورييز مقارنةً بالباقي."}, {"q": "Which test differentiates Enterococcus by rapid hydrolysis?", "options": ["Bile esculin", "DNase", "PAD", "Oxidase"], "answer": 0, "explanation": "Enterococcus إيجابي Bile esculin (اسوداد الوسط).},       {q:\\\"Oxidase is typically negative in:\\\", options:[\\\"Pseudomonas aeruginosa\\\",\\\"Neisseria spp.\\\",\\\"Enterobacteriaceae\\\",\\\"Vibrio cholerae\\\"], answer:2, explanation:\\\"معظم الأمعائيات سلبية أكسيداز."}, {"q": "Standard medium for Kirby–Bauer disk diffusion is:", "options": ["Nutrient agar", "Mueller–Hinton agar", "Blood agar", "MacConkey agar"], "answer": 1, "explanation": "Mueller–Hinton هو الوسط القياسي لاختبار الحساسية."}, {"q": "Inoculum for Kirby–Bauer is adjusted to:", "options": ["0.25 McFarland", "0.5 McFarland", "1.0 McFarland", "No standard"], "answer": 1, "explanation": "التوحيد على 0.5 McFarland يضمن نتائج قابلة للمقارنة."}, {"q": "Plates for AST should have agar depth of about:", "options": ["2 mm", "4 mm", "8 mm", "10 mm"], "answer": 1, "explanation": "العمق القياسي ~4 مم يؤثر مباشرة على حجم الهالة."}, {"q": "After swabbing the plate for AST, antibiotic disks should be applied within:", "options": ["5–15 minutes", "1 hour", "3 hours", "No time limit"], "answer": 0, "explanation": "التأخير يؤثر على الانتشار الأولي للمضاد وبالتالي على النتائج."}, {"q": "Zone of inhibition is measured in:", "options": ["cm", "mm", "inches", "arbitrary units"], "answer": 1, "explanation": "الأقطار تُقاس بالملّيمتر وتقارن بجداول التفسير."}, {"q": "Larger zone generally indicates:", "options": ["Resistance", "Intermediate", "Susceptibility", "Contamination"], "answer": 2, "explanation": "كلما كبرت الهالة عادةً زادت الحساسية للمضاد."}, {"q": "Which factor does NOT significantly affect zone size?", "options": ["Agar depth", "Inoculum density", "Disk potency", "Plate label color"], "answer": 3, "explanation": "لون اللصاقة لا يؤثر؛ بقية العوامل تؤثر."}, {"q": "Mueller–Hinton agar is preferred because it:", "options": ["Contains blood cells", "Has consistent composition and good diffusion", "Is selective for Gram+", "Is enriched"], "answer": 1, "explanation": "MHA تركيبه موحّد ويسمح بانتشار جيد للمضادات."}, {"q": "AST plates are incubated:", "options": ["Inverted at 35–37°C", "Upright at 28°C", "In CO2 jar always", "At 50°C"], "answer": 0, "explanation": "عادةً على 35–37° مقلوبة لتفادي التكاثف."}, {"q": "Reading AST is done after approximately:", "options": ["16–18 hours incubation", "2–4 hours", "3 days", "1 week"], "answer": 0, "explanation": "القراءة القياسية غالبًا بعد 16–18 ساعة."}, {"q": "Uniform lawn for AST is achieved by:", "options": ["Loop streaking", "Sterile swab in three directions", "Single central streak", "Deep stab"], "answer": 1, "explanation": "مسحة بثلاث اتجاهات تعطي سطحًا موحّدًا."}, {"q": "If colonies grow within the inhibition zone, this suggests:", "options": ["Pure susceptibility", "Heteroresistance/contamination", "Incorrect agar pH only", "Reading error only"], "answer": 1, "explanation": "نمو داخل الهالة قد يشير لمزيج مقاوم أو تلوث."}, {"q": "E-test strips are used to determine:", "options": ["MIC (gradient method)", "MBC only", "Hemolysis", "Motility"], "answer": 0, "explanation": "E-test يعطي تدرج تركيز لتحديد MIC عند نقطة تقاطع الهالة."}, {"q": "McFarland 0.5 standard approximates:", "options": ["~1.5 × 10^8 CFU/mL", "~1.5 × 10^6 CFU/mL", "~10^4 CFU/mL", "~10^9 CFU/mL"], "answer": 0, "explanation": "تقريبًا 1.5 × 10^8 CFU/مل لقياس كثافة التعليق الجرثومي."}, {"q": "Which statement about antibiotic diffusion is true?", "options": ["Diffuses more in thicker agar", "Diffuses radially from the disk", "Diffusion stops at 4 hours", "Does not depend on temperature"], "answer": 1, "explanation": "المضاد ينتشر شعاعيًا من القرص عبر الآجار."}, {"q": "Why avoid placing disks too close together?", "options": ["For aesthetics only", "Zones may overlap and be hard to interpret", "Prevents drying", "Reduces potency"], "answer": 1, "explanation": "تداخل الهالات يعقّد القياس الصحيح."}, {"q": "For fastidious organisms, AST may require:", "options": ["Chocolate agar with supplements", "Plain water agar", "No medium", "Anaerobic jar only"], "answer": 0, "explanation": "كائنات متطلبة قد تحتاج أوساط مُدعّمة لتقييم الحساسية."}, {"q": "Result categories in disk diffusion are:", "options": ["A/B/C", "Positive/Negative", "Susceptible/Intermediate/Resistant", "Alive/Dead"], "answer": 2, "explanation": "تُفسَّر القيم إلى S أو I أو R حسب الجداول."}, {"q": "If agar depth is less than recommended, zones will appear:", "options": ["Smaller than expected", "Larger than expected", "Unaffected", "Square"], "answer": 1, "explanation": "الآجار الأنحف يسمح بانتشار أكبر → هالات أكبر زائفة."}];
+const questions = [{"q": "Which medium is liquid in physical state?", "options": ["Nutrient broth", "Nutrient agar", "Motility agar (deep)", "Blood agar"], "answer": 0, "explanation": "الـ broth وسط سائل، ونمو البكتيريا فيه بيظهر كعكارة (turbidity)."}, {"q": "In semi-solid media, non-motile bacteria typically grow as:", "options": ["Turbidity throughout", "Isolated colonies", "Spreading feather-like growth", "Along the stab line only"], "answer": 3, "explanation": "في الوسط شبه الصلب، البكتيريا غير المتحركة بتظهر كنمو على خط الغرز فقط."}, {"q": "Bacterial colonies are seen on:", "options": ["Liquid media", "Solid media", "Candle jar", "Anaerobic jar"], "answer": 1, "explanation": "المستعمرات بتتكون على الأوساط الصلبة زي nutrient/blood agar."}, {"q": "MacConkey agar is best described as:", "options": ["Simple medium", "Enriched medium", "Selective & Differential medium", "Transport medium"], "answer": 2, "explanation": "MacConkey بيمنع Gram+ (bile salts & crystal violet) ويفرق lactose fermenters بـ Neutral red."}, {"q": "Indicator used in MacConkey agar is:", "options": ["Phenol red", "Neutral red", "Bromothymol blue", "Methylene blue"], "answer": 1, "explanation": "الـ indicator في MacConkey هو Neutral red لتمييز تخمير اللاكتوز."}, {"q": "Selective agents in MacConkey agar are:", "options": ["NaCl 7.5%", "Bile salts & crystal violet", "Antibiotics mix", "Eosin & methylene blue"], "answer": 1, "explanation": "أملاح الصفراء وCrystal violet تمنع أغلب الـGram positive."}, {"q": "Mannitol Salt Agar (MSA) is:", "options": ["Enriched only", "Selective & Differential", "Simple", "Transport"], "answer": 1, "explanation": "MSA فيه 7.5% NaCl (selective للـStaphylococci) وPhenol red يفرق تخمير المانيتول."}, {"q": "The carbohydrate and indicator in MSA are respectively:", "options": ["Lactose & Neutral red", "Glucose & Bromothymol blue", "Mannitol & Phenol red", "Sucrose & Methyl red"], "answer": 2, "explanation": "MSA: مانيتول + Phenol red."}, {"q": "EMB agar is commonly used for:", "options": ["Fungi", "Staphylococci", "Enteric Gram-negative bacilli", "Anaerobes"], "answer": 2, "explanation": "EMB انتقائي/تفريقي للأمعائيات (Gram-)، وتعطي E. coli لمعان معدني."}, {"q": "Which shows a metallic green sheen on EMB?", "options": ["Staphylococcus aureus", "Enterococcus faecalis", "Escherichia coli", "Pseudomonas aeruginosa"], "answer": 2, "explanation": "E. coli على EMB غالبًا بيظهر metallic green sheen لتخمير قوي."}, {"q": "Blood agar is primarily considered:", "options": ["Simple medium", "Enriched medium", "Selective medium", "Transport medium"], "answer": 1, "explanation": "Blood agar وسط مُغذّي (enriched) ويمكّن أيضًا التفريق بالتحلل الدموي."}, {"q": "Chocolate agar supports growth of:", "options": ["Fastidious organisms like Neisseria", "Strict anaerobes", "Fungi only", "Thermophiles"], "answer": 0, "explanation": "Chocolate agar (دم مُحلل) يدعم النيسيريا والهيموفيلس (كائنات متطلبة)."}, {"q": "Thayer–Martin medium is used to isolate:", "options": ["Haemophilus influenzae", "Neisseria gonorrhoeae", "Streptococcus pyogenes", "Clostridium perfringens"], "answer": 1, "explanation": "Thayer–Martin (Chocolate + مضادات) انتقائي للنيسيريا."}, {"q": "Cetrimide agar is selective for:", "options": ["Pseudomonas aeruginosa", "E. coli", "Salmonella Typhi", "Staphylococcus aureus"], "answer": 0, "explanation": "Cetrimide agar ينتقي Pseudomonas aeruginosa ويعزز صبغة البيوفيردين."}, {"q": "Selenite F broth is an example of:", "options": ["Simple medium", "Transport medium", "Enrichment broth", "Differential agar"], "answer": 2, "explanation": "Selenite F بيُثري السالمونيلا من عينات مختلطة قبل العزل."}, {"q": "Which is a simple medium?", "options": ["Simmons citrate agar", "Nutrient agar", "Blood agar", "MacConkey agar"], "answer": 1, "explanation": "Nutrient agar وسط بسيط غير انتقائي."}, {"q": "Transport media such as Stuart/Amies are designed to:", "options": ["Promote rapid growth", "Maintain viability without multiplication", "Select for Gram-negative rods", "Detect hemolysis"], "answer": 1, "explanation": "الـ Transport media بتحافظ على العينة حيّة بدون تكاثر لحين الزراعة."}, {"q": "TSI agar is mainly used to:", "options": ["Detect hemolysis", "Assess sugar fermentation and H2S in enterics", "Determine salt tolerance", "Grow anaerobes"], "answer": 1, "explanation": "TSI يفرّق بين أمعائيات حسب تخمير السكريات وإنتاج H2S وغاز."}, {"q": "Which plate is commonly used for antibiotic susceptibility testing?", "options": ["Sabouraud agar", "Mueller–Hinton agar", "Chocolate agar", "Nutrient agar"], "answer": 1, "explanation": "Mueller–Hinton هو المعيار لاختبار الحساسية (Kirby–Bauer)."}, {"q": "Which statement about Sabouraud dextrose agar is true?", "options": ["Selective for Gram- rods", "Favours fungi/yeasts by low pH", "Differential for lactose fermenters", "Contains blood"], "answer": 1, "explanation": "سابورو منخفض pH وغني بالسكريات ليدعم نمو الفطريات."}, {"q": "Streak plate method is primarily for:", "options": ["Measuring zone of inhibition", "Obtaining isolated colonies", "Demonstrating motility", "Growing anaerobes"], "answer": 1, "explanation": "الـ Streak plate بتوزّع البكتيريا لتكوين مستعمرات منفصلة لعزل نقي."}, {"q": "Lawn culture provides:", "options": ["Isolated colonies", "Uniform confluent growth", "Anaerobic conditions", "Hemolysis only"], "answer": 1, "explanation": "Lawn culture بيعمل طبقة نمو موحدة ومهم في اختبار الحساسية."}, {"q": "Stab inoculation is done in:", "options": ["Liquid broth", "Slant agar", "Semi-solid deep", "Plate surface"], "answer": 2, "explanation": "Stab بيتعمل في عمق وسط شبه صلب لتقييم الحركة/الأكسجين."}, {"q": "Stroke inoculation refers to:", "options": ["Aseptic flaming", "Surface streaking on a plate", "Gentle zigzag on slant surface", "Deep puncture in agar"], "answer": 2, "explanation": "Stroke هو تلقيح بلمسة/تمرير على سطح الـslant."}, {"q": "GasPak jar is used to create:", "options": ["Microaerophilic conditions", "Strict anaerobiosis", "High humidity only", "High temperature"], "answer": 1, "explanation": "GasPak مع محفّز البلاديوم يستهلك الأكسجين ويولّد جو لاهوائي."}, {"q": "Candle jar is best for:", "options": ["Strict anaerobes", "Capnophiles/microaerophiles", "Thermophiles", "Halophiles"], "answer": 1, "explanation": "Candle jar يقلل O2 ويرفع CO2 فيفيد الكائنات المحبة لثاني أكسيد الكربون."}, {"q": "Which technique reduces contamination risk?", "options": ["Leaving plates open", "Touching loop before flaming", "Aseptic flaming and minimizing exposure", "Pipetting by mouth"], "answer": 2, "explanation": "التقنيات العقيمة تشمل التعقيم باللهب وتقليل تعريض الوسط للهواء."}, {"q": "During streaking for isolation, you typically divide the plate into:", "options": ["2 sectors", "3–4 sectors", "6 sectors", "No sectors"], "answer": 1, "explanation": "تقسيم 3-4 مناطق يقلل الكثافة تدريجيًا للحصول على عزلات منفصلة."}, {"q": "For Kirby–Bauer testing, the inoculum is standardized to:", "options": ["1.5 McFarland", "0.5 McFarland", "3.0 McFarland", "No standard needed"], "answer": 1, "explanation": "المعيار الشائع 0.5 McFarland لضمان كثافة موحدة."}, {"q": "Why incubate plates inverted (agar up)?", "options": ["Better color", "Avoids condensation dripping onto surface", "Faster growth", "Prevents contamination by CO2"], "answer": 1, "explanation": "القلب يمنع سقوط تكاثف الماء الذي قد يسيّح المستعمرات."}, {"q": "Which method gives a uniform lawn for AST?", "options": ["Streak with loop", "Swabbing in three directions on MH agar", "Single stab", "Pouring molten agar"], "answer": 1, "explanation": "المسحة في ثلاث اتجاهات على Mueller–Hinton تعطي سطحًا موحدًا."}, {"q": "McIntosh–Fildes jar is used for:", "options": ["Fungi", "Aerobes", "Anaerobes", "Thermophiles"], "answer": 2, "explanation": "McIntosh–Fildes jar يوفّر جو لاهوائي باستخدام تفريغ وتحفيز."}, {"q": "A loop should be cooled before touching culture to:", "options": ["Increase colonies", "Prevent aerosol only", "Avoid killing bacteria and aerosols", "Speed up streaking"], "answer": 2, "explanation": "تبريد اللوب بعد التعقيم يمنع قتل البكتيريا وتكوين رذاذ."}, {"q": "Pour plate technique is useful to:", "options": ["Count viable colonies (CFU)", "Create lawn", "Test motility", "AST only"], "answer": 0, "explanation": "الـ Pour plate بيساعد في عدّ وحدات تكوين المستعمرات."}, {"q": "Best vessel for broth cultivation is:", "options": ["Slant tube", "Petri dish", "Screw-cap tube/flask", "Agar deep"], "answer": 2, "explanation": "الوسط السائل يُحضن في أنابيب/فلاسكات محكمة لتجنّب التلوث."}, {"q": "Gram-positive bacteria appear after Gram staining as:", "options": ["Red/Pink", "Purple/Blue", "Colorless", "Green"], "answer": 1, "explanation": "Gram+ تحتفظ بمركب CV-I داخل الجدار السميك فتظهر بنفسجي/أزرق."}, {"q": "Correct order in Gram stain is:", "options": ["Iodine → Crystal violet → Safranin → Alcohol", "Crystal violet → Iodine → Alcohol → Safranin", "Crystal violet → Alcohol → Iodine → Safranin", "Safranin → Alcohol → Crystal violet → Iodine"], "answer": 1, "explanation": "الترتيب: صبغة أساسية CV ثم Iodine ثم إزالة اللون بالكحول ثم Safranin."}, {"q": "Mordant used in Gram stain:", "options": ["Iodine", "Heat", "Acid-alcohol", "Phenol"], "answer": 0, "explanation": "اليود يثبّت البلّورة البنفسجية بتكوين مركب CV-I."}, {"q": "Decolorizer in Gram stain is commonly:", "options": ["Water", "Ethanol/Acetone", "Acid-alcohol", "KOH"], "answer": 1, "explanation": "الكحول/الأسيتون يزيل اللون من Gram- ذات الجدار الرقيق."}, {"q": "Counterstain in Gram stain is:", "options": ["Methylene blue", "Carbol fuchsin", "Safranin", "Malachite green"], "answer": 2, "explanation": "الـ Safranin تلوّن Gram- بالوردي/الأحمر."}, {"q": "Ziehl–Neelsen stain primarily detects:", "options": ["Spores", "Acid-fast bacteria", "Capsules", "Flagella"], "answer": 1, "explanation": "Ziehl–Neelsen تكشف الـ Acid-fast مثل Mycobacterium."}, {"q": "Primary stain in acid-fast staining:", "options": ["Crystal violet", "Carbol fuchsin", "Methylene blue", "Safranin"], "answer": 1, "explanation": "Carbol fuchsin صبغة أساسية تُسخَّن لاختراق الجدار الشمعي."}, {"q": "Mordant in classical Ziehl–Neelsen is:", "options": ["Iodine", "Heat", "Acid-alcohol", "Phenol red"], "answer": 1, "explanation": "التسخين يعمل كمُثبِّت/مُسهّل لاختراق الصبغة."}, {"q": "Decolorizer in acid-fast staining is:", "options": ["Alcohol", "Acid-alcohol", "Water", "Acetone"], "answer": 1, "explanation": "Acid-alcohol يزيل اللون من غير الحمضية فقط."}, {"q": "Counterstain in acid-fast staining:", "options": ["Safranin", "Methylene blue", "Crystal violet", "Malachite green"], "answer": 1, "explanation": "Methylene blue يصبغ غير الحمضية باللون الأزرق."}, {"q": "Acid-fast bacteria appear:", "options": ["Blue after staining", "Red after staining", "Green", "Colorless"], "answer": 1, "explanation": "الكائنات الحمضية تمسك Carbol fuchsin وتظهر حمراء."}, {"q": "Reason for acid-fastness:", "options": ["Thick peptidoglycan", "Mycolic acids in cell wall", "Teichoic acids", "Capsule"], "answer": 1, "explanation": "الأحماض الميكولية الدهنية تمنع إزالة اللون."}, {"q": "Over-decolorization in Gram stain may cause:", "options": ["False Gram-positive", "False acid-fast", "False Gram-negative", "No effect"], "answer": 2, "explanation": "الإزالة المفرطة قد تجعل Gram+ تظهر كأنها Gram-."}, {"q": "Old cultures of Gram-positive may appear:", "options": ["Gram-variable or Gram-negative", "Always purple", "Acid-fast", "Non-stainable"], "answer": 0, "explanation": "قدم العينة قد يضعف الجدار ويعطي Gram-variable."}, {"q": "Kinyoun method differs by:", "options": ["Using no heat (cold method)", "No counterstain", "No decolorizer", "Using iodine as mordant"], "answer": 0, "explanation": "Kinyoun يزيد الفينول/الصبغة بدل التسخين (طريقة باردة)."}, {"q": "Catalase test reagent is:", "options": ["H2O", "H2O2", "KOH", "Nitrate broth"], "answer": 1, "explanation": "نستخدم بيروكسيد الهيدروجين H2O2 ويظهر فقاعات إذا كان الإنزيم موجود."}, {"q": "Catalase positive cocci include:", "options": ["Streptococci", "Enterococci", "Staphylococci", "Lactococci"], "answer": 2, "explanation": "الستاف إيجابي كاتالاز؛ الستربتو/إنترو نيجاتيف."}, {"q": "Coagulase test helps identify:", "options": ["Staphylococcus aureus", "Staphylococcus epidermidis", "Streptococcus pyogenes", "Enterococcus faecalis"], "answer": 0, "explanation": "S. aureus عادة إيجابي Coagulase بينما S. epidermidis سلبي."}, {"q": "Oxidase test detects presence of:", "options": ["Cytochrome c oxidase", "Catalase", "Coagulase", "Peroxidase"], "answer": 0, "explanation": "اختبار الأكسيداز يكشف إنزيم cytochrome c oxidase."}, {"q": "Common oxidase reagent that turns purple is:", "options": ["Kovac’s reagent", "Barritt’s A", "Tetramethyl-p-phenylenediamine (TMPD)", "Ferric chloride"], "answer": 2, "explanation": "TMPD يتأكسد إلى indophenol أزرق/بنفسجي."}, {"q": "Indole test detects enzyme:", "options": ["Urease", "Tryptophanase", "Citrate permease", "Decarboxylase"], "answer": 1, "explanation": "التربتوفاناز يحوّل التربتوفان لإندول؛ يظهر بحلقة حمراء مع Kovac’s."}, {"q": "Positive indole reaction appears as:", "options": ["Blue slant", "Black precipitate", "Red ring at top", "Green slant"], "answer": 2, "explanation": "حلقة حمراء عليا مع كوافاك تعني إنتاج إندول."}, {"q": "Methyl Red positive indicates:", "options": ["Strong acid production (mixed-acid fermentation)", "Acetoin production", "Citrate utilization", "Urea hydrolysis"], "answer": 0, "explanation": "MR موجب يعني حموضة ثابتة (E. coli غالبًا)."}, {"q": "Voges–Proskauer (VP) detects:", "options": ["Lactose fermentation", "Acetoin (2,3-butanediol pathway)", "H2S production", "Gas only"], "answer": 1, "explanation": "VP يكشف الأسيتوين باستخدام كاشفي بارِت."}, {"q": "Barritt’s reagents are:", "options": ["Alpha-naphthol & KOH", "Kovac’s & HCl", "Ferric chloride & HCl", "Sulfanilic acid & α-naphthylamine"], "answer": 0, "explanation": "VP: ألفا نافثول + KOH لأكسدة الأسيتوين للون الأحمر."}, {"q": "Simmons citrate test uses indicator:", "options": ["Phenol red", "Bromothymol blue", "Neutral red", "Methyl red"], "answer": 1, "explanation": "بروموثيمول بلو يتحول لأزرق عند قلوية نتيجة استخدام السترات."}, {"q": "Citrate positive appears as:", "options": ["Deep red ring", "Blue slant/growth", "Black butt", "Pink broth"], "answer": 1, "explanation": "نمو ولون أزرق يدل على استخدام السترات كمصدر وحيد للكربون."}, {"q": "Urease positive reaction:", "options": ["Medium turns pink", "Medium turns blue", "Black precipitate", "Gas bubbles only"], "answer": 0, "explanation": "هيدروlysis اليوريا ينتج NH3 يرفع pH فيحوّل Phenol red للوردي."}, {"q": "Rapid urease positive genus is:", "options": ["Escherichia", "Proteus", "Salmonella", "Shigella"], "answer": 1, "explanation": "Proteus مشهور بنشاط يورييز سريع → لون وردي قوي."}, {"q": "TSI K/A with H2S means:", "options": ["Lactose fermenter", "Glucose only fermentation, H2S produced", "No sugar used", "Sucrose only"], "answer": 1, "explanation": "K/A: قلوية slant وحموضة butt = جلوكوز فقط + H2S أسود."}, {"q": "Gas production in TSI appears as:", "options": ["Blue color", "Cracks/lifting of agar", "Blackening", "Green sheen"], "answer": 1, "explanation": "الغاز يعمل شقوق ورفع للآجار."}, {"q": "H2S indicator system in TSI involves:", "options": ["Ferric ions & thiosulfate", "Neutral red & lactose", "Phenol red only", "Bile salts"], "answer": 0, "explanation": "يتكوّن راسب أسود (FeS) من كبريتيد الهيدروجين مع الحديد."}, {"q": "Typical H2S producer among enterics:", "options": ["Salmonella enterica", "Shigella sonnei", "Escherichia coli", "Klebsiella pneumoniae"], "answer": 0, "explanation": "السالمونيلا غالبًا تنتج H2S، بينما الشيجلا لا."}, {"q": "Nitrate reduction test: red after adding reagents A & B indicates:", "options": ["No reduction", "Reduction to nitrite", "Complete reduction to nitrogen", "Contamination"], "answer": 1, "explanation": "اللون الأحمر بعد A+B يعني وجود نيتريت ناتج عن الاختزال."}, {"q": "If no color after A & B, red only after zinc indicates:", "options": ["Positive complete reduction", "Negative (nitrate still present)", "Inconclusive", "Contamination"], "answer": 1, "explanation": "الزنك يختزل النترات لنّيتريت ويُظهر الأحمر → يعني البكتيريا لم تختزلها (سلبي)."}, {"q": "If still colorless even after zinc, that indicates:", "options": ["Positive (reduced beyond nitrite)", "Negative", "Invalid", "Gram-variable"], "answer": 0, "explanation": "بدون لون بعد الزنك → النترات اختُزلت لغاز N2/أمونيا (اختزال كامل)."}, {"q": "Phenylalanine deaminase (PAD) positive turns:", "options": ["Green with ferric chloride", "Pink with phenol red", "Black with H2S", "Blue with BTB"], "answer": 0, "explanation": "نزع أمين الفينيل ألانين يعطي لون أخضر مع كلوريد الحديديك (مثبت في Proteus)."}, {"q": "DNase test positive shows:", "options": ["Black precipitate", "Clear zone around growth", "Gas bubbles", "Metallic sheen"], "answer": 1, "explanation": "تحلّل DNA يسبب منطقة شفافة حول النمو على DNase agar (S. aureus)."}, {"q": "Bile esculin positive appears as:", "options": ["Green slant", "Blackening of medium", "Pink broth", "No change"], "answer": 1, "explanation": "تحلّل الإسكولين بوجود بيل يعطي مركبات مع الحديد تُسود الوسط (Enterococcus)."}, {"q": "Motility in a semi-solid medium is seen as:", "options": ["Growth only along stab line", "Diffuse hazy spread from the line", "Colonies on surface", "Black butt"], "answer": 1, "explanation": "الحركة تُرى كانتشار عكاري بعيدًا عن خط الغرز."}, {"q": "Which combination identifies S. aureus among staphylococci?", "options": ["Catalase– & Coagulase–", "Catalase+ & Coagulase+", "Oxidase+ & Catalase–", "Urease+ & MR+"], "answer": 1, "explanation": "S. aureus عادةً Catalase+ وCoagulase+."}, {"q": "Why avoid scraping colonies from blood agar for catalase slide test?", "options": ["Too many colonies", "RBC catalase may give false positive", "Plate dries quickly", "Indicator interferes"], "answer": 1, "explanation": "كريات الدم الحمراء فيها كاتالاز → فقاعات خاطئة."}, {"q": "Kovac’s reagent is used in:", "options": ["Indole test", "MR test", "VP test", "Citrate test"], "answer": 0, "explanation": "كوافاك يُظهر حلقة الإندول الحمراء."}, {"q": "Enterobacter/Klebsiella are typically:", "options": ["MR+ VP–", "MR– VP+", "MR+ VP+", "MR– VP–"], "answer": 1, "explanation": "عادة MR سلبي وVP إيجابي لمسار 2,3-بوتانديول."}, {"q": "E. coli profile among IMViC is often:", "options": ["++--", "--++", "+--+", "-+-+"], "answer": 0, "explanation": "IMViC لإيشيريشيا كولي غالبًا Indole+, MR+, VP–, Citrate– (أي ++--)."},       {q:"Urease negative among these is most likely:", options:["Proteus mirabilis","Klebsiella pneumoniae","Escherichia coli","Morganella morganii"], answer:2, explanation:"E. coli عادة سلبي يورييز مقارنةً بالباقي."}, {"q": "Which test differentiates Enterococcus by rapid hydrolysis?", "options": ["Bile esculin", "DNase", "PAD", "Oxidase"], "answer": 0, "explanation": "Enterococcus إيجابي Bile esculin (اسوداد الوسط)."},       {q:"Oxidase is typically negative in:", options:["Pseudomonas aeruginosa","Neisseria spp.","Enterobacteriaceae","Vibrio cholerae"], answer:2, explanation:"معظم الأمعائيات سلبية أكسيداز."}, {"q": "Standard medium for Kirby–Bauer disk diffusion is:", "options": ["Nutrient agar", "Mueller–Hinton agar", "Blood agar", "MacConkey agar"], "answer": 1, "explanation": "Mueller–Hinton هو الوسط القياسي لاختبار الحساسية."}, {"q": "Inoculum for Kirby–Bauer is adjusted to:", "options": ["0.25 McFarland", "0.5 McFarland", "1.0 McFarland", "No standard"], "answer": 1, "explanation": "التوحيد على 0.5 McFarland يضمن نتائج قابلة للمقارنة."}, {"q": "Plates for AST should have agar depth of about:", "options": ["2 mm", "4 mm", "8 mm", "10 mm"], "answer": 1, "explanation": "العمق القياسي ~4 مم يؤثر مباشرة على حجم الهالة."}, {"q": "After swabbing the plate for AST, antibiotic disks should be applied within:", "options": ["5–15 minutes", "1 hour", "3 hours", "No time limit"], "answer": 0, "explanation": "التأخير يؤثر على الانتشار الأولي للمضاد وبالتالي على النتائج."}, {"q": "Zone of inhibition is measured in:", "options": ["cm", "mm", "inches", "arbitrary units"], "answer": 1, "explanation": "الأقطار تُقاس بالملّيمتر وتقارن بجداول التفسير."}, {"q": "Larger zone generally indicates:", "options": ["Resistance", "Intermediate", "Susceptibility", "Contamination"], "answer": 2, "explanation": "كلما كبرت الهالة عادةً زادت الحساسية للمضاد."}, {"q": "Which factor does NOT significantly affect zone size?", "options": ["Agar depth", "Inoculum density", "Disk potency", "Plate label color"], "answer": 3, "explanation": "لون اللصاقة لا يؤثر؛ بقية العوامل تؤثر."}, {"q": "Mueller–Hinton agar is preferred because it:", "options": ["Contains blood cells", "Has consistent composition and good diffusion", "Is selective for Gram+", "Is enriched"], "answer": 1, "explanation": "MHA تركيبه موحّد ويسمح بانتشار جيد للمضادات."}, {"q": "AST plates are incubated:", "options": ["Inverted at 35–37°C", "Upright at 28°C", "In CO2 jar always", "At 50°C"], "answer": 0, "explanation": "عادةً على 35–37° مقلوبة لتفادي التكاثف."}, {"q": "Reading AST is done after approximately:", "options": ["16–18 hours incubation", "2–4 hours", "3 days", "1 week"], "answer": 0, "explanation": "القراءة القياسية غالبًا بعد 16–18 ساعة."}, {"q": "Uniform lawn for AST is achieved by:", "options": ["Loop streaking", "Sterile swab in three directions", "Single central streak", "Deep stab"], "answer": 1, "explanation": "مسحة بثلاث اتجاهات تعطي سطحًا موحّدًا."}, {"q": "If colonies grow within the inhibition zone, this suggests:", "options": ["Pure susceptibility", "Heteroresistance/contamination", "Incorrect agar pH only", "Reading error only"], "answer": 1, "explanation": "نمو داخل الهالة قد يشير لمزيج مقاوم أو تلوث."}, {"q": "E-test strips are used to determine:", "options": ["MIC (gradient method)", "MBC only", "Hemolysis", "Motility"], "answer": 0, "explanation": "E-test يعطي تدرج تركيز لتحديد MIC عند نقطة تقاطع الهالة."}, {"q": "McFarland 0.5 standard approximates:", "options": ["~1.5 × 10^8 CFU/mL", "~1.5 × 10^6 CFU/mL", "~10^4 CFU/mL", "~10^9 CFU/mL"], "answer": 0, "explanation": "تقريبًا 1.5 × 10^8 CFU/مل لقياس كثافة التعليق الجرثومي."}, {"q": "Which statement about antibiotic diffusion is true?", "options": ["Diffuses more in thicker agar", "Diffuses radially from the disk", "Diffusion stops at 4 hours", "Does not depend on temperature"], "answer": 1, "explanation": "المضاد ينتشر شعاعيًا من القرص عبر الآجار."}, {"q": "Why avoid placing disks too close together?", "options": ["For aesthetics only", "Zones may overlap and be hard to interpret", "Prevents drying", "Reduces potency"], "answer": 1, "explanation": "تداخل الهالات يعقّد القياس الصحيح."}, {"q": "For fastidious organisms, AST may require:", "options": ["Chocolate agar with supplements", "Plain water agar", "No medium", "Anaerobic jar only"], "answer": 0, "explanation": "كائنات متطلبة قد تحتاج أوساط مُدعّمة لتقييم الحساسية."}, {"q": "Result categories in disk diffusion are:", "options": ["A/B/C", "Positive/Negative", "Susceptible/Intermediate/Resistant", "Alive/Dead"], "answer": 2, "explanation": "تُفسَّر القيم إلى S أو I أو R حسب الجداول."}, {"q": "If agar depth is less than recommended, zones will appear:", "options": ["Smaller than expected", "Larger than expected", "Unaffected", "Square"], "answer": 1, "explanation": "الآجار الأنحف يسمح بانتشار أكبر → هالات أكبر زائفة."}];
 const phrases = ["برافو يا نجم 🌟", "إنت جامد أوي 👌", "عاش يا دكتور 🥼", "ما شاء الله عليك 💯", "إجابتك زي الفل 🌹", "كده تمام يا معلم 🙌", "الله ينور 👏", "مخك ماسورة معلومات 🤓", "انت قافش المادة 🔥", "شغل عظمة يا دكتور 🧠", "انت قدها 💪", "أيوه كده ✌️", "تمام التمام ✅", "ولا غلطة 👌", "الاجابة دي درس خصوصي 🔥", "دماغك كبيرة 🎓", "أجدع إجابة 👏", "انت شبح الميكرو 😎", "ولا الأوائل 👌", "مافيش بعد كده 🌟", "تحفة 👏", "يا برنس 💯", "عاااش", "ملك الإجابات 👑", "يا دكتور الجامدين 🙌", "ضحكتني واجابتك صح 😂", "انت مش سايبلي فرصة أغلطك 🤔", "ده انت مذاكر كويس 🥳", "كبير يا عم 👏", "عظمة يا مان 🔥", "شغل فاخر 🏆", "مافيش غلطة 👌", "حوار كبير منك 🤩", "ياسلام عليك يا معلم 🎯", "انت متسطر جامد 📚", "برافو يا أسطورة 🐐", "كده نخش الامتحان واحنا مطمنين 🙏", "عالي اوووي 👌", "رايق في المذاكرة ☕", "انت كده استاذي ❤️", "تحفة يا فنان 🎨", "كده الميكرو تحت السيطرة 😎", "خليتني فرحان بيك 🥹", "ده انت ملك ال MCQ 👑", "انت قاهر الأسئلة 👊", "فارس المعمل 🧪", "الدكتور هيصفقلك 👏", "شغل بطولي 💥", "راجل فاهم جامد 🔥", "تمام يا بطل 🦸"];
 
 const quiz = document.getElementById('quiz');
