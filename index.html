@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>Applied Microbiology Mock Exam</title>
+  <title>امتحان Applied Microbiology</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    body { font-family: "Tahoma", sans-serif; margin: 20px; background: #f4f4f4; direction: rtl; }
     h1 { text-align: center; color: #2c3e50; }
     .question { background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     .options label { display: block; margin: 5px 0; cursor: pointer; }
@@ -14,130 +14,70 @@
   </style>
 </head>
 <body>
-  <h1>Applied Microbiology - Mock Exam (20 MCQs)</h1>
+  <h1>امتحان تجريبي - Applied Microbiology</h1>
   <div id="quiz"></div>
 
   <script>
     const questions = [
       {
-        q: "Which of the following is a semi-solid medium used to detect bacterial motility?",
+        q: "أي وسط شبه صلب يُستخدم لاختبار الحركة (motility)؟",
         options: ["Nutrient broth", "TSI agar", "Motility agar (deep)", "Blood agar"],
         answer: 2,
-        explanation: "الوسط شبه الصلب (Motility agar) بيستخدم علشان نعرف إذا كانت البكتيريا متحركة ولا لأ. لو متحركة هتنتشر بعيد عن خط الحقن."
+        explanation: "الوسط الشبه صلب (Motility agar) بيستخدم اختبار الحركة. لو البكتيريا متحركة بتنتشر بعيد عن خط الحقن."
       },
       {
-        q: "In liquid media, bacterial growth usually appears as:",
-        options: ["Isolated colonies", "Turbidity", "Line of inoculation", "Zone of inhibition"],
+        q: "البكتيريا في الـ Liquid media بتنمو على هيئة:",
+        options: ["مستعمرات منفصلة", "عكارة (Turbidity)", "خط مستقيم", "Zone of inhibition"],
         answer: 1,
-        explanation: "في الوسط السائل (broth) النمو بيبان في صورة عكارة (turbidity) لأن البكتيريا بتنتشر في كل السائل."
+        explanation: "في الوسط السائل (broth) النمو بيظهر كعكارة (turbidity) نتيجة انتشار البكتيريا في السائل."
       },
       {
-        q: "MacConkey agar is classified as:",
-        options: ["Simple medium", "Enriched medium", "Selective and Differential medium", "Transport medium"],
+        q: "MacConkey agar يُعتبر:",
+        options: ["Simple medium", "Enriched medium", "Selective + Differential medium", "Transport medium"],
         answer: 2,
-        explanation: "MacConkey بيمنع نمو Gram positive (Selective) وكمان بيفرق بين اللي بيخمر اللاكتوز واللي مش بيخمره (Differential)."
+        explanation: "MacConkey فيه مواد بتمنع نمو Gram positive (selective) وكمان بيفرق بين lactose fermenters و non-fermenters (differential)."
       },
       {
-        q: "The sugar and indicator in Mannitol Salt Agar (MSA) are:",
+        q: "السكر و المؤشر في Mannitol Salt Agar هما:",
         options: ["Lactose & Neutral red", "Mannitol & Phenol red", "Glucose & Methyl red", "Lactose & Methylene blue"],
         answer: 1,
-        explanation: "MSA فيه مانيتول كسكر و Phenol red كمؤشر. لو Staph aureus موجود هيخمر المانيتول والوسط هيبقى أصفر."
+        explanation: "MSA بيحتوي على Mannitol كسكر و Phenol red كمؤشر. لو Staph aureus → بيخمر المانيتول → الوسط يصفر."
       },
       {
-        q: "Which technique is used for isolation of pure colonies?",
+        q: "أي تكنيك يُستخدم لعزل مستعمرات نقية؟",
         options: ["Lawn culture", "Streak plate", "Stroke culture", "Stab culture"],
         answer: 1,
-        explanation: "Streak plate هدفه عزل مستعمرات نقية من خليط بكتيريا عن طريق تخفيف العينة تدريجياً على سطح الأجار."
+        explanation: "Streak plate (أربع مناطق) الهدف منها عزل مستعمرات نقية من خليط."
       },
       {
-        q: "Antibiotic susceptibility test is done using:",
+        q: "اختبار حساسية المضاد الحيوي (AST) يتم باستخدام:",
         options: ["Streak plate", "Lawn culture (one culture method)", "Stroke culture", "Pour plate"],
         answer: 1,
-        explanation: "اختبار الحساسية بيتعمل بالـ Lawn culture علشان يكون فيه نمو متجانس ونقدر نقيس الـ zone حوالين الأقراص."
+        explanation: "AST لازم يكون فيه نمو متجانس (lawn culture) علشان نقيس Zone of inhibition حوالين الديسكات."
       },
       {
-        q: "The GasPak system is used for:",
-        options: ["Enriching growth", "Aerobic cultivation", "Anaerobic cultivation", "Antibiotic sensitivity"],
+        q: "GasPak system يُستخدم من أجل:",
+        options: ["زيادة النمو", "Aerobic culture", "Anaerobic culture", "Antibiotic test"],
         answer: 2,
-        explanation: "GasPak بيعمل جو لا هوائي لأنه بيولد هيدروجين يتفاعل مع الأكسجين ويشيله."
+        explanation: "GasPak بيولد هيدروجين + ثاني أكسيد الكربون ويتفاعل مع الأكسجين → وسط لاهوائي."
       },
       {
-        q: "In the Gram stain, the mordant is:",
+        q: "في Gram stain، المورديانت (Mordant) هو:",
         options: ["Alcohol", "Safranin", "Iodine", "Heat"],
         answer: 2,
-        explanation: "اليود (Iodine) بيشتغل كمثبت للصبغة البلورية في البكتيريا Gram positive."
+        explanation: "اليود (Iodine) بيعمل كمثبت للصبغة البلورية في البكتيريا Gram positive."
       },
       {
-        q: "After Gram staining, Gram-negative bacteria appear:",
+        q: "بعد Gram staining، البكتيريا Gram negative لونها:",
         options: ["Purple", "Blue", "Green", "Red/Pink"],
         answer: 3,
-        explanation: "Gram negative بتفقد الـ crystal violet بالـ alcohol وبتاخد اللون الأحمر من الـ Safranin."
+        explanation: "Gram negative بتفقد الـ crystal violet بالـ alcohol وتأخد الـ safranin → أحمر/وردي."
       },
       {
-        q: "In the Acid-fast stain (Ziehl–Neelsen), the counterstain is:",
+        q: "في Acid-fast stain (Ziehl–Neelsen)، ال-Counter stain هو:",
         options: ["Safranin", "Crystal violet", "Methylene blue", "Neutral red"],
         answer: 2,
-        explanation: "البكتيريا Acid-fast تفضل حمراء (Carbolfuchsin)، والباقي ياخد لون أزرق (Methylene blue)."
-      },
-      {
-        q: "Catalase test detects the breakdown of:",
-        options: ["Glucose → Pyruvate", "Urea → Ammonia", "H2O2 → H2O + O2", "Lactose → Acid"],
-        answer: 2,
-        explanation: "إنزيم Catalase بيكسر H2O2 لمية + أكسجين → بيبان في صورة فقاعات."
-      },
-      {
-        q: "A positive catalase test with bubble formation is characteristic of:",
-        options: ["Streptococcus spp.", "Staphylococcus aureus", "Escherichia coli", "Salmonella typhi"],
-        answer: 1,
-        explanation: "Staphylococcus aureus بيعمل Catalase (positive) بينما Streptococcus مش بيعمل (negative)."
-      },
-      {
-        q: "The oxidase test positive reaction produces:",
-        options: ["Yellow precipitate", "Gas bubbles", "Dark purple color (indophenol)", "Black H2S"],
-        answer: 2,
-        explanation: "في اختبار Oxidase الإنزيم بيأكسد الرياجنت ويكون مركب لونه بنفسجي غامق (Indophenol)."
-      },
-      {
-        q: "Which organism is coagulase positive?",
-        options: ["Staphylococcus aureus", "Staphylococcus epidermidis", "Streptococcus pyogenes", "E. coli"],
-        answer: 0,
-        explanation: "Staph. aureus بينتج إنزيم Coagulase اللي بيخثر البلازما وده بيميزه عن باقي الأنواع."
-      },
-      {
-        q: "The indole test detects the breakdown of:",
-        options: ["Tryptophan → Indole", "Urea → Ammonia", "Glucose → Lactic acid", "Citrate → Oxaloacetate"],
-        answer: 0,
-        explanation: "بعض البكتيريا (زي E. coli) بتكسر Tryptophan وبتنتج Indole اللي بيتكشف بكوافاكز رييجنت."
-      },
-      {
-        q: "In the TSI test, blackening of the medium indicates:",
-        options: ["Lactose fermentation", "Glucose fermentation", "Gas production", "H2S production"],
-        answer: 3,
-        explanation: "اللون الأسود بيظهر نتيجة إنتاج كبريتيد الهيدروجين H2S واتحاده مع أملاح الحديد."
-      },
-      {
-        q: "Which of the following gives MR positive (red color)?",
-        options: ["Klebsiella", "Enterobacter", "Escherichia coli", "Pseudomonas"],
-        answer: 2,
-        explanation: "E. coli Mixed acid fermenter → ينزل الـ pH → Methyl red يفضل أحمر (positive)."
-      },
-      {
-        q: "In the citrate test, a positive result is indicated by:",
-        options: ["Purple colonies", "Blue color of medium", "Black precipitate", "Red ring after Kovac’s reagent"],
-        answer: 1,
-        explanation: "لو البكتيريا بتستخدم Citrate كمصدر للكربون → الوسط يتحول أزرق بسبب زيادة الـ pH."
-      },
-      {
-        q: "Mueller-Hinton agar is mainly used for:",
-        options: ["Isolation of Staphylococcus", "Detection of motility", "Antibiotic susceptibility testing", "Blood hemolysis detection"],
-        answer: 2,
-        explanation: "Mueller-Hinton agar هو الوسط القياسي المستخدم في اختبار الحساسية (Kirby-Bauer)."
-      },
-      {
-        q: "The McFarland standard (0.5) is used to:",
-        options: ["Detect H2S", "Adjust inoculum turbidity", "Differentiate lactose fermenters", "Indicate hemolysis"],
-        answer: 1,
-        explanation: "المكفارلاند ستاندرد (0.5) بيستخدم علشان نوحد تركيز البكتيريا قبل اختبار الحساسية."
+        explanation: "البكتيريا Acid-fast تفضل حمراء (Carbolfuchsin) أما Non acid-fast تاخد اللون الأزرق (Methylene blue)."
       }
     ];
 
@@ -146,7 +86,7 @@
     questions.forEach((q, i) => {
       let div = document.createElement("div");
       div.className = "question";
-      div.innerHTML = `<p><b>Q${i+1}:</b> ${q.q}</p>`;
+      div.innerHTML = `<p><b>س${i+1}:</b> ${q.q}</p>`;
       let opts = document.createElement("div");
       opts.className = "options";
       q.options.forEach((opt, j) => {
@@ -165,10 +105,10 @@
       opts.addEventListener("change", (e) => {
         let chosen = parseInt(e.target.value);
         if (chosen === q.answer) {
-          feedback.innerHTML = "✅ Correct!";
+          feedback.innerHTML = "✅ إجابة صحيحة!";
           feedback.className = "feedback correct";
         } else {
-          feedback.innerHTML = `❌ Wrong! <br>✅ Correct answer: <b>${q.options[q.answer]}</b><br>💡 Explanation (Arabic): ${q.explanation}`;
+          feedback.innerHTML = `❌ إجابة خاطئة! <br> الصح: <b>${q.options[q.answer]}</b><br>الشرح: ${q.explanation}`;
           feedback.className = "feedback incorrect";
         }
       });
