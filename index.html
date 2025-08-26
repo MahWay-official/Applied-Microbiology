@@ -1,12 +1,9 @@
-# Let's create a trial version (about 20 questions) with the new animated mouse GIF instead of static image.
-# This will allow the user to confirm the animation and style before scaling up to 100 questions.
 
-quiz_html_trial = r"""
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Applied Microbiology Mega Quiz</title>
+  <title>Applied Microbiology Quiz - Extended Trial</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; background: #f0f7ff; }
     header {background: linear-gradient(90deg,#4facfe,#00f2fe);
@@ -25,85 +22,38 @@ quiz_html_trial = r"""
   </style>
 </head>
 <body>
-  <header>Applied Microbiology Mega Quiz 🎓🧫</header>
+  <header>Applied Microbiology Quiz 🧫🐭</header>
   <div id="quiz"></div>
   <button id="scoreBtn" onclick="calculateScore()">Calculate Score</button>
   <div id="result" style="font-size:20px; font-weight:bold;"></div>
 
-  <!-- Animated mouse doctor GIF -->
   <img id="mouseDoc" src="https://cdn.pixabay.com/animation/2022/08/15/08/47/08-47-44-137_512.gif" />
 
   <script>
     const questions = [
-      {
-        q: "Which medium is liquid in physical state?",
-        options: ["Nutrient broth", "Nutrient agar", "Motility agar", "Blood agar"],
-        answer: 0,
-        explanation: "الـ broth وسط سائل بيستخدم لزراعة البكتيريا ويبان فيه النمو كعكارة."
-      },
-      {
-        q: "In semi-solid media, non-motile bacteria grow as:",
-        options: ["Turbidity", "Colonies", "Along the stab line", "Spreading away"],
-        answer: 2,
-        explanation: "البكتيريا غير المتحركة بتظهر على شكل خط النمو مكان ما اتغرز اللوب بس."
-      },
-      {
-        q: "Bacterial colonies are seen in:",
-        options: ["Liquid media", "Solid media", "Semi-solid media", "Anaerobic jar"],
-        answer: 1,
-        explanation: "المستعمرات بتظهر على وسط صلب زي Nutrient agar أو Blood agar."
-      },
-      {
-        q: "MacConkey agar is classified as:",
-        options: ["Simple", "Enriched", "Selective & Differential", "Transport"],
-        answer: 2,
-        explanation: "MacConkey selective ضد Gram + و differential بين lactose fermenter/non-fermenter."
-      },
-      {
-        q: "Chocolate agar is an example of:",
-        options: ["Simple medium", "Enriched medium", "Selective medium", "Differential medium"],
-        answer: 1,
-        explanation: "الشوكولات أجار وسط مُغذّي (enriched) بيستخدم لعزل النيسيريا والهيموفيلس."
-      },
-      {
-        q: "The streak plate method is mainly used for:",
-        options: ["Pure colony isolation", "Antibiotic sensitivity", "Motility test", "Anaerobic culture"],
-        answer: 0,
-        explanation: "Streak plate بيسمح بعزل مستعمرات منفصلة للحصول على culture نقي."
-      },
-      {
-        q: "The lawn culture method is used for:",
-        options: ["Pure colony isolation", "Antibiotic sensitivity testing", "Motility detection", "Differentiation of species"],
-        answer: 1,
-        explanation: "Lawn culture بيعمل سطح موحّد للنمو وبيستخدم في اختبار حساسية المضاد الحيوي."
-      },
-      {
-        q: "Stab inoculation is performed in:",
-        options: ["Slant agar", "Liquid broth", "Semi-solid agar", "Blood agar plate"],
-        answer: 2,
-        explanation: "Stab culture بيتعمل في وسط شبه صلب لمعرفة الحركة أو متطلبات الأكسجين."
-      },
-      {
-        q: "Stroke inoculation is done on:",
-        options: ["Slant agar surface", "Liquid broth", "Deep agar", "Petri dish"],
-        answer: 0,
-        explanation: "Stroke inoculation بيكون على سطح slant agar عشان نحافظ على الكائن أو نعمل biochemical test."
-      },
-      {
-        q: "Candle jar technique is used for:",
-        options: ["Obligate aerobes", "Anaerobes", "Microaerophiles", "Fungi"],
-        answer: 2,
-        explanation: "Candle jar بيقلل الأكسجين ويزوّد CO2 فمفيد لزراعة الميكروبات المحبة لثاني أكسيد الكربون (microaerophiles)."
-      }
+      {q:"Which medium is liquid?", options:["Nutrient broth","Nutrient agar","Motility agar","Blood agar"], answer:0, explanation:"الـ broth وسط سائل بيظهر النمو فيه كعكارة."},
+      {q:"In semi-solid media, motile bacteria appear as:", options:["Turbidity","Diffused growth","Colonies","No growth"], answer:1, explanation:"البكتيريا المتحركة تنتشر بعيد عن خط الغرز (diffusion)."},
+      {q:"MacConkey agar is:", options:["Simple","Enriched","Selective & Differential","Transport"], answer:2, explanation:"MacConkey selective ضد Gram+ و differential بين lactose fermenters."},
+      {q:"Mannitol salt agar is:", options:["Selective for Gram-","Selective & Differential","Enriched","Transport"], answer:1, explanation:"MSA selective للبكتيريا المحبة للملح و differential بين S. aureus وغيرها."},
+      {q:"Blood agar is classified as:", options:["Enriched","Simple","Selective","Differential only"], answer:0, explanation:"Blood agar وسط enriched لاحتوائه على الدم."},
+      {q:"Streak plate method purpose:", options:["Obtain pure colonies","Antibiotic sensitivity","Anaerobic growth","Motility test"], answer:0, explanation:"Streak plate method لعزل مستعمرات نقية."},
+      {q:"Lawn culture used in:", options:["Antibiotic sensitivity test","Motility test","Differential staining","Anaerobic culture"], answer:0, explanation:"Lawn culture يعمل سطح نمو موحد لاختبار المضاد الحيوي."},
+      {q:"Stab inoculation medium type:", options:["Semi-solid","Liquid","Slant","Selective agar"], answer:0, explanation:"Stab inoculation في وسط شبه صلب لتقييم الحركة أو الأكسجين."},
+      {q:"Stroke inoculation is done on:", options:["Slant agar","Deep agar","Liquid broth","Petri plate"], answer:0, explanation:"Stroke inoculation بيتم على سطح slant agar."},
+      {q:"Candle jar creates:", options:["Anaerobic environment","Microaerophilic environment","Aerobic environment","None"], answer:1, explanation:"Candle jar يقلل O2 ويرفع CO2 → بيخلق جو microaerophilic."},
+      {q:"Primary stain in Gram stain:", options:["Crystal violet","Iodine","Alcohol","Safranin"], answer:0, explanation:"أول خطوة في Gram stain استخدام crystal violet."},
+      {q:"Mordant in Gram stain:", options:["Heat","Alcohol","Iodine","Safranin"], answer:2, explanation:"الـ iodine يعمل تزبيد للصبغة."},
+      {q:"Decolorizer in Gram stain:", options:["Water","Alcohol","Safranin","Acid-alcohol"], answer:1, explanation:"الـ alcohol يشيل اللون من Gram-."},
+      {q:"Counterstain in Gram stain:", options:["Crystal violet","Safranin","Carbol fuchsin","Methylene blue"], answer:1, explanation:"الـ Safranin بتدي Gram- اللون الأحمر/الوردي."},
+      {q:"Acid-fast stain other name:", options:["Gram stain","Ziehl-Neelsen stain","Simple stain","Negative stain"], answer:1, explanation:"Acid-fast stain اسمه Ziehl-Neelsen نسبة للمخترعين."},
+      {q:"Primary stain in Acid-fast stain:", options:["Crystal violet","Carbol fuchsin","Safranin","Methylene blue"], answer:1, explanation:"Carbol fuchsin الصبغة الأساسية."},
+      {q:"Mordant in Acid-fast stain:", options:["Heat","Iodine","Alcohol","None"], answer:0, explanation:"الـ heat بيعمل دور المردنت هنا."},
+      {q:"Decolorizer in Acid-fast stain:", options:["Alcohol","Acid-alcohol","Water","Safranin"], answer:1, explanation:"Acid-alcohol هو مزيل اللون."},
+      {q:"Counterstain in Acid-fast stain:", options:["Safranin","Crystal violet","Methylene blue","Carbol fuchsin"], answer:2, explanation:"Methylene blue بيدي اللون للبكتيريا non-acid-fast."},
+      {q:"Catalase test detects:", options:["Catalase enzyme","Oxidase enzyme","Coagulase enzyme","Amylase"], answer:0, explanation:"Catalase test يكشف عن إنزيم catalase اللي يكسر H2O2."}
     ];
 
-    const phrases = [
-      "الله ينور يا نجم 🌟",
-      "كده يا معلم 👏",
-      "انت مقطع السمك وديله 🐟😂",
-      "الدحيح جابلك ورا 🧠🔥",
-      "كده المايكروب يخاف منك 😎🧫"
-    ];
+    const phrases = ['الله ينور يا معلم 🌟', 'برافو يا دكتور 👏', 'كده تمام ✅', 'انت بروفيشنال 🧠', 'مافيش مايكروب قدك 😎', 'انت جامد 🔥', 'الدحيح رجع 🤓', 'كده 10/10 💯', 'شغل عالي 👌', 'انت أسطورة المعمل 🧫', 'عاش يا بطل 💪', 'انت قاهر البكتيريا 🦠', 'تمام التمام ✔️', 'كده الكل يخاف منك 😂', 'انت ضربة المعلم 🎯', 'المعمل منور بيك 💡', 'بروفيسور المعمل 🎓', 'كده الشغل مظبوط 🛠️', 'المايكروب يسلم ويمشي 🙌', 'تمام عليك 👏', 'انت أمل الدكاترة 🌍', 'انت موسوعة مايكرو 📚', 'ده انت شبح المعمل 👻', 'النجاح صاحبك دايمًا 🌟', 'كده كله تمام يا كبير 🎉', 'ده انت لو مايكروب شافك يجري على السابونة 🧼', 'المعمل من غيرك زي طبق كشري من غير دقة 🍲', 'انت واخد المايكروب بالبوكس 🥊😂', 'كده البكتيريا هتطلب تحويل لجامعة تانية 😂', 'انت فظيع لدرجة الميكروب بيذاكرلك 😅', 'بقيت خطر على الميكروبات 🚨', 'يا معلم البكتيريا بتعيط دلوقتي 😭', 'انت لو دخلت معمل، الميكروب يعمل نفسه نايم 😴', 'ده انت الحارس الشخصي ضد البكتيريا 👮\u200d♂️', 'انت خلت المكروب يحجز في أوبر ويرجع البيت 🚗', 'المايكروبات دلوقتي بتقول: سلملي عليه 🙏', 'بقيت أنت الكابوس بتاع البكتيريا 🌙', 'انت فضحت الميكروب 😂', 'يا مايكروب سيب المعمل للباشا 🏆', 'انت بتكسر شوكة البكتيريا ⚔️', 'برافو، كده الميكروب هيتحجز عناية مركزة 🏥', 'انت خليت البكتيريا تاخد إجازة مرضية 📝', 'يا سلام على الإجابة 👌 البكتيريا نفسها مصدومة', 'ده انت المايكروب بقى يتوب على إيدك 😇', 'انت الشيف الكبير في مطبخ المعمل 👨\u200d🍳🧫', 'انت عملت حفلة للمضادات الحيوية 🎉💊', 'البكتيريا دي خلاص راحت في داهية 🤯', 'انت بتهزر؟ ده انت موسوعة متنقلة 📖', 'ده انت أقوى من مطهر كحول 70% 🍶', 'المايكروب قال: أنا ماليش في الطب 😂'];
 
     function showMouse() {
       const mouse = document.getElementById("mouseDoc");
@@ -159,11 +109,3 @@ quiz_html_trial = r"""
   </script>
 </body>
 </html>
-"""
-
-# Save trial file with GIF
-file_path_trial = '/mnt/data/applied_micro_fun_quiz_trial.html'
-with open(file_path_trial, 'w', encoding='utf-8') as f:
-    f.write(quiz_html_trial)
-
-file_path_trial
