@@ -110,9 +110,40 @@
         } else {
           feedback.innerHTML = `❌ إجابة خاطئة! <br> الصح: <b>${q.options[q.answer]}</b><br>الشرح: ${q.explanation}`;
           feedback.className = "feedback incorrect";
-        }
+      <!-- جزء الغلاف -->
+<header style="background: linear-gradient(90deg,#4facfe,#00f2fe); padding:20px; text-align:center; color:white; font-size:24px; border-radius:12px;">
+  Applied Microbiology Mega Quiz 🎓🧫
+</header>
+
+<!-- صورة الفار -->
+<img id="mouseDoc" src="https://i.ibb.co/XCszHHR/mouse-doctor.png" 
+     style="position:fixed; bottom:20px; left:-200px; width:150px; transition:all 0.7s ease;" />
+
+<script>
+  const phrases = [
+    "الله ينور يا نجم 🌟",
+    "كده يا معلم 👏",
+    "انت مقطع السمك وديله 🐟😂",
+    "الدحيح جابلك ورا 🧠🔥",
+    "كده المايكروب يخاف منك 😎🧫"
+  ];
+
+  function showMouse() {
+    const mouse = document.getElementById("mouseDoc");
+    const phrase = phrases[Math.floor(Math.random()*phrases.length)];
+    mouse.style.left = "20px"; // يدخل من الشمال
+    setTimeout(()=> {
+      alert(phrase); // يطّلع الجملة بالمصري
+      mouse.style.left = "-200px"; // يخرج تاني
+    },1500);
+  }
+</script>
+
+         }
+        
       });
     });
   </script>
 </body>
 </html>
+
