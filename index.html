@@ -1,92 +1,128 @@
+# Let's create a trial version (about 20 questions) with the new animated mouse GIF instead of static image.
+# This will allow the user to confirm the animation and style before scaling up to 100 questions.
+
+quiz_html_trial = r"""
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>امتحان Applied Microbiology</title>
+  <title>Applied Microbiology Mega Quiz</title>
   <style>
-    body { font-family: "Tahoma", sans-serif; margin: 20px; background: #f4f4f4; direction: rtl; }
-    h1 { text-align: center; color: #2c3e50; }
-    .question { background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f0f7ff; }
+    header {background: linear-gradient(90deg,#4facfe,#00f2fe);
+            padding:20px; text-align:center; color:white; 
+            font-size:28px; font-weight:bold; border-radius:12px;
+            margin-bottom:20px;}
+    .question { background: #fff; padding: 15px; margin: 10px 0;
+                border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     .options label { display: block; margin: 5px 0; cursor: pointer; }
     .feedback { margin-top: 8px; font-weight: bold; }
     .correct { color: green; }
     .incorrect { color: red; }
+    #mouseDoc { position:fixed; bottom:20px; left:-300px; width:160px; 
+                transition:all 0.7s ease; z-index:1000; }
+    #scoreBtn {margin:20px; padding:10px 20px; font-size:18px; background:#4facfe; color:#fff; border:none; border-radius:8px; cursor:pointer;}
   </style>
 </head>
 <body>
-  <h1>امتحان تجريبي - Applied Microbiology</h1>
+  <header>Applied Microbiology Mega Quiz 🎓🧫</header>
   <div id="quiz"></div>
+  <button id="scoreBtn" onclick="calculateScore()">Calculate Score</button>
+  <div id="result" style="font-size:20px; font-weight:bold;"></div>
+
+  <!-- Animated mouse doctor GIF -->
+  <img id="mouseDoc" src="https://cdn.pixabay.com/animation/2022/08/15/08/47/08-47-44-137_512.gif" />
 
   <script>
     const questions = [
       {
-        q: "أي وسط شبه صلب يُستخدم لاختبار الحركة (motility)؟",
-        options: ["Nutrient broth", "TSI agar", "Motility agar (deep)", "Blood agar"],
-        answer: 2,
-        explanation: "الوسط الشبه صلب (Motility agar) بيستخدم اختبار الحركة. لو البكتيريا متحركة بتنتشر بعيد عن خط الحقن."
+        q: "Which medium is liquid in physical state?",
+        options: ["Nutrient broth", "Nutrient agar", "Motility agar", "Blood agar"],
+        answer: 0,
+        explanation: "الـ broth وسط سائل بيستخدم لزراعة البكتيريا ويبان فيه النمو كعكارة."
       },
       {
-        q: "البكتيريا في الـ Liquid media بتنمو على هيئة:",
-        options: ["مستعمرات منفصلة", "عكارة (Turbidity)", "خط مستقيم", "Zone of inhibition"],
+        q: "In semi-solid media, non-motile bacteria grow as:",
+        options: ["Turbidity", "Colonies", "Along the stab line", "Spreading away"],
+        answer: 2,
+        explanation: "البكتيريا غير المتحركة بتظهر على شكل خط النمو مكان ما اتغرز اللوب بس."
+      },
+      {
+        q: "Bacterial colonies are seen in:",
+        options: ["Liquid media", "Solid media", "Semi-solid media", "Anaerobic jar"],
         answer: 1,
-        explanation: "في الوسط السائل (broth) النمو بيظهر كعكارة (turbidity) نتيجة انتشار البكتيريا في السائل."
+        explanation: "المستعمرات بتظهر على وسط صلب زي Nutrient agar أو Blood agar."
       },
       {
-        q: "MacConkey agar يُعتبر:",
-        options: ["Simple medium", "Enriched medium", "Selective + Differential medium", "Transport medium"],
+        q: "MacConkey agar is classified as:",
+        options: ["Simple", "Enriched", "Selective & Differential", "Transport"],
         answer: 2,
-        explanation: "MacConkey فيه مواد بتمنع نمو Gram positive (selective) وكمان بيفرق بين lactose fermenters و non-fermenters (differential)."
+        explanation: "MacConkey selective ضد Gram + و differential بين lactose fermenter/non-fermenter."
       },
       {
-        q: "السكر و المؤشر في Mannitol Salt Agar هما:",
-        options: ["Lactose & Neutral red", "Mannitol & Phenol red", "Glucose & Methyl red", "Lactose & Methylene blue"],
+        q: "Chocolate agar is an example of:",
+        options: ["Simple medium", "Enriched medium", "Selective medium", "Differential medium"],
         answer: 1,
-        explanation: "MSA بيحتوي على Mannitol كسكر و Phenol red كمؤشر. لو Staph aureus → بيخمر المانيتول → الوسط يصفر."
+        explanation: "الشوكولات أجار وسط مُغذّي (enriched) بيستخدم لعزل النيسيريا والهيموفيلس."
       },
       {
-        q: "أي تكنيك يُستخدم لعزل مستعمرات نقية؟",
-        options: ["Lawn culture", "Streak plate", "Stroke culture", "Stab culture"],
+        q: "The streak plate method is mainly used for:",
+        options: ["Pure colony isolation", "Antibiotic sensitivity", "Motility test", "Anaerobic culture"],
+        answer: 0,
+        explanation: "Streak plate بيسمح بعزل مستعمرات منفصلة للحصول على culture نقي."
+      },
+      {
+        q: "The lawn culture method is used for:",
+        options: ["Pure colony isolation", "Antibiotic sensitivity testing", "Motility detection", "Differentiation of species"],
         answer: 1,
-        explanation: "Streak plate (أربع مناطق) الهدف منها عزل مستعمرات نقية من خليط."
+        explanation: "Lawn culture بيعمل سطح موحّد للنمو وبيستخدم في اختبار حساسية المضاد الحيوي."
       },
       {
-        q: "اختبار حساسية المضاد الحيوي (AST) يتم باستخدام:",
-        options: ["Streak plate", "Lawn culture (one culture method)", "Stroke culture", "Pour plate"],
-        answer: 1,
-        explanation: "AST لازم يكون فيه نمو متجانس (lawn culture) علشان نقيس Zone of inhibition حوالين الديسكات."
-      },
-      {
-        q: "GasPak system يُستخدم من أجل:",
-        options: ["زيادة النمو", "Aerobic culture", "Anaerobic culture", "Antibiotic test"],
+        q: "Stab inoculation is performed in:",
+        options: ["Slant agar", "Liquid broth", "Semi-solid agar", "Blood agar plate"],
         answer: 2,
-        explanation: "GasPak بيولد هيدروجين + ثاني أكسيد الكربون ويتفاعل مع الأكسجين → وسط لاهوائي."
+        explanation: "Stab culture بيتعمل في وسط شبه صلب لمعرفة الحركة أو متطلبات الأكسجين."
       },
       {
-        q: "في Gram stain، المورديانت (Mordant) هو:",
-        options: ["Alcohol", "Safranin", "Iodine", "Heat"],
+        q: "Stroke inoculation is done on:",
+        options: ["Slant agar surface", "Liquid broth", "Deep agar", "Petri dish"],
+        answer: 0,
+        explanation: "Stroke inoculation بيكون على سطح slant agar عشان نحافظ على الكائن أو نعمل biochemical test."
+      },
+      {
+        q: "Candle jar technique is used for:",
+        options: ["Obligate aerobes", "Anaerobes", "Microaerophiles", "Fungi"],
         answer: 2,
-        explanation: "اليود (Iodine) بيعمل كمثبت للصبغة البلورية في البكتيريا Gram positive."
-      },
-      {
-        q: "بعد Gram staining، البكتيريا Gram negative لونها:",
-        options: ["Purple", "Blue", "Green", "Red/Pink"],
-        answer: 3,
-        explanation: "Gram negative بتفقد الـ crystal violet بالـ alcohol وتأخد الـ safranin → أحمر/وردي."
-      },
-      {
-        q: "في Acid-fast stain (Ziehl–Neelsen)، ال-Counter stain هو:",
-        options: ["Safranin", "Crystal violet", "Methylene blue", "Neutral red"],
-        answer: 2,
-        explanation: "البكتيريا Acid-fast تفضل حمراء (Carbolfuchsin) أما Non acid-fast تاخد اللون الأزرق (Methylene blue)."
+        explanation: "Candle jar بيقلل الأكسجين ويزوّد CO2 فمفيد لزراعة الميكروبات المحبة لثاني أكسيد الكربون (microaerophiles)."
       }
     ];
 
+    const phrases = [
+      "الله ينور يا نجم 🌟",
+      "كده يا معلم 👏",
+      "انت مقطع السمك وديله 🐟😂",
+      "الدحيح جابلك ورا 🧠🔥",
+      "كده المايكروب يخاف منك 😎🧫"
+    ];
+
+    function showMouse() {
+      const mouse = document.getElementById("mouseDoc");
+      const phrase = phrases[Math.floor(Math.random()*phrases.length)];
+      mouse.style.left = "20px"; 
+      setTimeout(()=> {
+        alert(phrase);
+        mouse.style.left = "-300px"; 
+      },1500);
+    }
+
     const quizDiv = document.getElementById("quiz");
+    let score = 0;
+    let answered = Array(questions.length).fill(false);
 
     questions.forEach((q, i) => {
       let div = document.createElement("div");
       div.className = "question";
-      div.innerHTML = `<p><b>س${i+1}:</b> ${q.q}</p>`;
+      div.innerHTML = `<p><b>Q${i+1}:</b> ${q.q}</p>`;
       let opts = document.createElement("div");
       opts.className = "options";
       q.options.forEach((opt, j) => {
@@ -105,45 +141,29 @@
       opts.addEventListener("change", (e) => {
         let chosen = parseInt(e.target.value);
         if (chosen === q.answer) {
-          feedback.innerHTML = "✅ إجابة صحيحة!";
+          feedback.innerHTML = "✅ Correct!";
           feedback.className = "feedback correct";
+          if (!answered[i]) { score++; answered[i]=true; }
+          showMouse();
         } else {
-          feedback.innerHTML = `❌ إجابة خاطئة! <br> الصح: <b>${q.options[q.answer]}</b><br>الشرح: ${q.explanation}`;
+          feedback.innerHTML = `❌ Wrong! <br>✅ Correct answer: <b>${q.options[q.answer]}</b><br>💡 Explanation (Arabic): ${q.explanation}`;
           feedback.className = "feedback incorrect";
-      <!-- جزء الغلاف -->
-<header style="background: linear-gradient(90deg,#4facfe,#00f2fe); padding:20px; text-align:center; color:white; font-size:24px; border-radius:12px;">
-  Applied Microbiology Mega Quiz 🎓🧫
-</header>
-
-<!-- صورة الفار -->
-<img id="mouseDoc" src="https://i.ibb.co/XCszHHR/mouse-doctor.png" 
-     style="position:fixed; bottom:20px; left:-200px; width:150px; transition:all 0.7s ease;" />
-
-<script>
-  const phrases = [
-    "الله ينور يا نجم 🌟",
-    "كده يا معلم 👏",
-    "انت مقطع السمك وديله 🐟😂",
-    "الدحيح جابلك ورا 🧠🔥",
-    "كده المايكروب يخاف منك 😎🧫"
-  ];
-
-  function showMouse() {
-    const mouse = document.getElementById("mouseDoc");
-    const phrase = phrases[Math.floor(Math.random()*phrases.length)];
-    mouse.style.left = "20px"; // يدخل من الشمال
-    setTimeout(()=> {
-      alert(phrase); // يطّلع الجملة بالمصري
-      mouse.style.left = "-200px"; // يخرج تاني
-    },1500);
-  }
-</script>
-
-         }
-        
+          answered[i]=true;
+        }
       });
     });
+
+    function calculateScore() {
+      document.getElementById("result").innerHTML = "Your Score: " + score + " / " + questions.length;
+    }
   </script>
 </body>
 </html>
+"""
 
+# Save trial file with GIF
+file_path_trial = '/mnt/data/applied_micro_fun_quiz_trial.html'
+with open(file_path_trial, 'w', encoding='utf-8') as f:
+    f.write(quiz_html_trial)
+
+file_path_trial
