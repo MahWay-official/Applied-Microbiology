@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Applied Microbiology Mock Exam</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    h1 { text-align: center; color: #2c3e50; }
+    .question { background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .options label { display: block; margin: 5px 0; cursor: pointer; }
+    .feedback { margin-top: 8px; font-weight: bold; }
+    .correct { color: green; }
+    .incorrect { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Applied Microbiology - Mock Exam (20 MCQs)</h1>
+  <div id="quiz"></div>
+
+  <script>
+    const questions = [
+      {
+        q: "Which of the following is a semi-solid medium used to detect bacterial motility?",
+        options: ["Nutrient broth", "TSI agar", "Motility agar (deep)", "Blood agar"],
+        answer: 2,
+        explanation: "الوسط شبه الصلب (Motility agar) بيستخدم علشان نعرف إذا كانت البكتيريا متحركة ولا لأ. لو متحركة هتنتشر بعيد عن خط الحقن."
+      },
+      {
+        q: "In liquid media, bacterial growth usually appears as:",
+        options: ["Isolated colonies", "Turbidity", "Line of inoculation", "Zone of inhibition"],
+        answer: 1,
+        explanation: "في الوسط السائل (broth) النمو بيبان في صورة عكارة (turbidity) لأن البكتيريا بتنتشر في كل السائل."
+      },
+      {
+        q: "MacConkey agar is classified as:",
+        options: ["Simple medium", "Enriched medium", "Selective and Differential medium", "Transport medium"],
+        answer: 2,
+        explanation: "MacConkey بيمنع نمو Gram positive (Selective) وكمان بيفرق بين اللي بيخمر اللاكتوز واللي مش بيخمره (Differential)."
+      },
+      {
+        q: "The sugar and indicator in Mannitol Salt Agar (MSA) are:",
+        options: ["Lactose & Neutral red", "Mannitol & Phenol red", "Glucose & Methyl red", "Lactose & Methylene blue"],
+        answer: 1,
+        explanation: "MSA فيه مانيتول كسكر و Phenol red كمؤشر. لو Staph aureus موجود هيخمر المانيتول والوسط هيبقى أصفر."
+      },
+      {
+        q: "Which technique is used for isolation of pure colonies?",
+        options: ["Lawn culture", "Streak plate", "Stroke culture", "Stab culture"],
+        answer: 1,
+        explanation: "Streak plate هدفه عزل مستعمرات نقية من خليط بكتيريا عن طريق تخفيف العينة تدريجياً على سطح الأجار."
+      },
+      {
+        q: "Antibiotic susceptibility test is done using:",
+        options: ["Streak plate", "Lawn culture (one culture method)", "Stroke culture", "Pour plate"],
+        answer: 1,
+        explanation: "اختبار الحساسية بيتعمل بالـ Lawn culture علشان يكون فيه نمو متجانس ونقدر نقيس الـ zone حوالين الأقراص."
+      },
+      {
+        q: "The GasPak system is used for:",
+        options: ["Enriching growth", "Aerobic cultivation", "Anaerobic cultivation", "Antibiotic sensitivity"],
+        answer: 2,
+        explanation: "GasPak بيعمل جو لا هوائي لأنه بيولد هيدروجين يتفاعل مع الأكسجين ويشيله."
+      },
+      {
+        q: "In the Gram stain, the mordant is:",
+        options: ["Alcohol", "Safranin", "Iodine", "Heat"],
+        answer: 2,
+        explanation: "اليود (Iodine) بيشتغل كمثبت للصبغة البلورية في البكتيريا Gram positive."
+      },
+      {
+        q: "After Gram staining, Gram-negative bacteria appear:",
+        options: ["Purple", "Blue", "Green", "Red/Pink"],
+        answer: 3,
+        explanation: "Gram negative بتفقد الـ crystal violet بالـ alcohol وبتاخد اللون الأحمر من الـ Safranin."
+      },
+      {
+        q: "In the Acid-fast stain (Ziehl–Neelsen), the counterstain is:",
+        options: ["Safranin", "Crystal violet", "Methylene blue", "Neutral red"],
+        answer: 2,
+        explanation: "البكتيريا Acid-fast تفضل حمراء (Carbolfuchsin)، والباقي ياخد لون أزرق (Methylene blue)."
+      },
+      {
+        q: "Catalase test detects the breakdown of:",
+        options: ["Glucose → Pyruvate", "Urea → Ammonia", "H2O2 → H2O + O2", "Lactose → Acid"],
+        answer: 2,
+        explanation: "إنزيم Catalase بيكسر H2O2 لمية + أكسجين → بيبان في صورة فقاعات."
+      },
+      {
+        q: "A positive catalase test with bubble formation is characteristic of:",
+        options: ["Streptococcus spp.", "Staphylococcus aureus", "Escherichia coli", "Salmonella typhi"],
+        answer: 1,
+        explanation: "Staphylococcus aureus بيعمل Catalase (positive) بينما Streptococcus مش بيعمل (negative)."
+      },
+      {
+        q: "The oxidase test positive reaction produces:",
+        options: ["Yellow precipitate", "Gas bubbles", "Dark purple color (indophenol)", "Black H2S"],
+        answer: 2,
+        explanation: "في اختبار Oxidase الإنزيم بيأكسد الرياجنت ويكون مركب لونه بنفسجي غامق (Indophenol)."
+      },
+      {
+        q: "Which organism is coagulase positive?",
+        options: ["Staphylococcus aureus", "Staphylococcus epidermidis", "Streptococcus pyogenes", "E. coli"],
+        answer: 0,
+        explanation: "Staph. aureus بينتج إنزيم Coagulase اللي بيخثر البلازما وده بيميزه عن باقي الأنواع."
+      },
+      {
+        q: "The indole test detects the breakdown of:",
+        options: ["Tryptophan → Indole", "Urea → Ammonia", "Glucose → Lactic acid", "Citrate → Oxaloacetate"],
+        answer: 0,
+        explanation: "بعض البكتيريا (زي E. coli) بتكسر Tryptophan وبتنتج Indole اللي بيتكشف بكوافاكز رييجنت."
+      },
+      {
+        q: "In the TSI test, blackening of the medium indicates:",
+        options: ["Lactose fermentation", "Glucose fermentation", "Gas production", "H2S production"],
+        answer: 3,
+        explanation: "اللون الأسود بيظهر نتيجة إنتاج كبريتيد الهيدروجين H2S واتحاده مع أملاح الحديد."
+      },
+      {
+        q: "Which of the following gives MR positive (red color)?",
+        options: ["Klebsiella", "Enterobacter", "Escherichia coli", "Pseudomonas"],
+        answer: 2,
+        explanation: "E. coli Mixed acid fermenter → ينزل الـ pH → Methyl red يفضل أحمر (positive)."
+      },
+      {
+        q: "In the citrate test, a positive result is indicated by:",
+        options: ["Purple colonies", "Blue color of medium", "Black precipitate", "Red ring after Kovac’s reagent"],
+        answer: 1,
+        explanation: "لو البكتيريا بتستخدم Citrate كمصدر للكربون → الوسط يتحول أزرق بسبب زيادة الـ pH."
+      },
+      {
+        q: "Mueller-Hinton agar is mainly used for:",
+        options: ["Isolation of Staphylococcus", "Detection of motility", "Antibiotic susceptibility testing", "Blood hemolysis detection"],
+        answer: 2,
+        explanation: "Mueller-Hinton agar هو الوسط القياسي المستخدم في اختبار الحساسية (Kirby-Bauer)."
+      },
+      {
+        q: "The McFarland standard (0.5) is used to:",
+        options: ["Detect H2S", "Adjust inoculum turbidity", "Differentiate lactose fermenters", "Indicate hemolysis"],
+        answer: 1,
+        explanation: "المكفارلاند ستاندرد (0.5) بيستخدم علشان نوحد تركيز البكتيريا قبل اختبار الحساسية."
+      }
+    ];
+
+    const quizDiv = document.getElementById("quiz");
+
+    questions.forEach((q, i) => {
+      let div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `<p><b>Q${i+1}:</b> ${q.q}</p>`;
+      let opts = document.createElement("div");
+      opts.className = "options";
+      q.options.forEach((opt, j) => {
+        opts.innerHTML += `
+          <label>
+            <input type="radio" name="q${i}" value="${j}">
+            ${opt}
+          </label>`;
+      });
+      div.appendChild(opts);
+      let feedback = document.createElement("div");
+      feedback.className = "feedback";
+      div.appendChild(feedback);
+      quizDiv.appendChild(div);
+
+      opts.addEventListener("change", (e) => {
+        let chosen = parseInt(e.target.value);
+        if (chosen === q.answer) {
+          feedback.innerHTML = "✅ Correct!";
+          feedback.className = "feedback correct";
+        } else {
+          feedback.innerHTML = `❌ Wrong! <br>✅ Correct answer: <b>${q.options[q.answer]}</b><br>💡 Explanation (Arabic): ${q.explanation}`;
+          feedback.className = "feedback incorrect";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
