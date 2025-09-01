@@ -1,377 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Applied Microbiology Mega Quiz — Full 100</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Applied Microbiology Exam (70 MCQs)</title>
 <style>
-  :root {
-    --primary-color: #2c3e50;
-    --secondary-color: #3498db;
-    --accent-color: #e74c3c;
-    --light-bg: #ecf0f1;
-    --dark-text: #2c3e50;
-    --light-text: #ffffff;
-    --card-bg: #ffffff;
-    --shadow: 0 4px 8px rgba(0,0,0,0.1);
-    --correct-color: #27ae60;
-    --incorrect-color: #e74c3c;
+  :root{
+    --bg:#0b1020;
+    --card:#131a2b;
+    --ink:#e8ecf1;
+    --muted:#a9b1c1;
+    --accent:#6aa9ff;
+    --good:#36c275;
+    --bad:#ff6b6b;
   }
-  
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--light-bg);
-    margin: 0;
-    padding: 0;
-    color: var(--dark-text);
-    line-height: 1.6;
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    background: linear-gradient(120deg,#0b1020,#09173a);
+    color:var(--ink);
   }
-  
-  header {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    padding: 20px;
-    text-align: center;
-    color: var(--light-text);
-    font-weight: 800;
-    box-shadow: var(--shadow);
-    position: relative;
-    overflow: hidden;
+  header{
+    position:sticky; top:0; z-index:10;
+    backdrop-filter:blur(10px);
+    background:rgba(10,15,35,.7);
+    border-bottom:1px solid #1f2a44;
   }
-  
-  header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--accent-color);
+  .wrap{max-width:1000px; margin:0 auto; padding:20px;}
+  h1{margin:8px 0 4px; font-size: clamp(22px,3vw,30px)}
+  p.lead{margin:0 0 12px; color:var(--muted)}
+  .controls{display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 12px}
+  button,.btn{
+    background:var(--accent); color:#06122b; border:none; padding:10px 14px; border-radius:10px;
+    font-weight:700; cursor:pointer; transition:transform .05s ease, box-shadow .2s ease;
+    box-shadow:0 6px 18px rgba(106,169,255,.25);
   }
-  
-  .wrap {
-    max-width: 980px;
-    margin: 25px auto;
-    padding: 20px;
+  button:hover{transform:translateY(-1px)}
+  button.secondary{background:#223150; color:var(--ink)}
+  button.ghost{background:transparent; border:1px solid #324362; color:var(--ink)}
+  .card{
+    background:var(--card); border:1px solid #1f2a44; border-radius:14px; padding:16px; margin:14px 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
   }
-  
-  .intro {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: var(--shadow);
-    border-left: 4px solid var(--secondary-color);
+  .q-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px}
+  .qid{font-weight:800; color:#89a7ff}
+  .qtext{font-size:18px; font-weight:600}
+  .opts{display:grid; grid-template-columns:1fr; gap:8px; margin-top:10px}
+  .opt{
+    display:flex; gap:10px; align-items:center; background:#0e1426; border:1px solid #213055; padding:10px; border-radius:10px; cursor:pointer;
   }
-  
-  .question {
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-    background: var(--card-bg);
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
+  .opt input{accent-color:var(--accent)}
+  .exp{
+    margin-top:10px; padding:10px; border-radius:10px; display:none;
+    background:#0e1a2e; border:1px dashed #2a3c64; color:var(--muted)
   }
-  
-  .question:hover {
-    transform: translateY(-3px);
-  }
-  
-  .qhead {
-    font-weight: 800;
-    margin: 0 0 12px;
-    color: var(--primary-color);
-    font-size: 1.1em;
-  }
-  
-  .options label {
-    display: block;
-    margin: 10px 0;
-    padding: 12px 15px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    cursor: pointer;
-    user-select: none;
-    transition: all 0.2s ease;
-    background: #f9f9f9;
-  }
-  
-  .options label:hover {
-    background: #edf7ff;
-    border-color: var(--secondary-color);
-  }
-  
-  .options input {
-    margin-right: 10px;
-  }
-  
-  .feedback {
-    margin-top: 15px;
-    font-weight: 700;
-    padding: 15px;
-    border-radius: 8px;
-    line-height: 1.5;
-  }
-  
-  .correct {
-    color: var(--correct-color);
-    background-color: rgba(39, 174, 96, 0.1);
-    border-left: 4px solid var(--correct-color);
-  }
-  
-  .incorrect {
-    color: var(--incorrect-color);
-    background-color: rgba(231, 76, 60, 0.1);
-    border-left: 4px solid var(--incorrect-color);
-  }
-  
-  #mouse {
-    position: fixed;
-    bottom: 20px;
-    left: -360px;
-    width: 160px;
-    transition: left 0.6s;
-    z-index: 9999;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-  }
-  
-  .toast {
-    position: fixed;
-    bottom: 200px;
-    left: 20px;
-    background: rgba(0,0,0,0.85);
-    color: #fff;
-    padding: 12px 18px;
-    border-radius: 12px;
-    font-weight: 700;
-    display: none;
-    z-index: 10000;
-    max-width: 60%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
-  
-  .controls {
-    text-align: center;
-    margin: 30px 0;
-  }
-  
-  button {
-    background: var(--secondary-color);
-    border: none;
-    color: var(--light-text);
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    margin: 0 10px;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow);
-  }
-  
-  button:hover {
-    background: var(--primary-color);
-    transform: translateY(-2px);
-  }
-  
-  button.secondary {
-    background: var(--light-bg);
-    color: var(--dark-text);
-    border: 1px solid #ddd;
-  }
-  
-  button.secondary:hover {
-    background: #dce4e6;
-  }
-  
-  #score {
-    font-weight: 800;
-    margin-top: 20px;
-    font-size: 1.2em;
-    color: var(--primary-color);
-  }
-  
-  .sponsorship {
-    background: linear-gradient(135deg, var(--primary-color), #2a4b7c);
-    color: white;
-    padding: 40px 20px;
-    text-align: center;
-    margin-top: 50px;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-  }
-  
-  .sponsorship h2 {
-    margin-top: 0;
-    font-size: 28px;
-    margin-bottom: 20px;
-  }
-  
-  .sponsorship p {
-    max-width: 700px;
-    margin: 0 auto 25px;
-    font-size: 18px;
-    line-height: 1.6;
-  }
-  
-  .sponsor-button {
-    display: inline-block;
-    background: var(--accent-color);
-    color: white;
-    padding: 14px 30px;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
-  
-  .sponsor-button:hover {
-    background: #c0392b;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-  }
-  
-  .sponsor-logo {
-    max-width: 200px;
-    margin: 0 auto 25px;
-    display: block;
-    filter: brightness(0) invert(1);
-  }
-  
-  footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    color: #7f8c8d;
-    font-size: 0.9em;
-    border-top: 1px solid #ddd;
-  }
-  
-  @media (max-width: 768px) {
-    .wrap {
-      padding: 15px;
-      margin: 15px auto;
-    }
-    
-    .question {
-      padding: 15px;
-    }
-    
-    .options label {
-      padding: 10px;
-    }
-    
-    .toast {
-      max-width: 80%;
-      left: 10px;
-      right: 10px;
-      margin: 0 auto;
-    }
-    
-    #mouse {
-      width: 120px;
-    }
-  }
+  .exp.show{display:block}
+  .correct{border-color:#275a44; background:rgba(54,194,117,.08)}
+  .wrong{border-color:#6b2a2a; background:rgba(255,107,107,.08)}
+  .badge{display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; font-weight:700}
+  .badge.good{background:rgba(54,194,117,.15); color:#78e2a8; border:1px solid #2b6b4f}
+  .badge.bad{background:rgba(255,107,107,.15); color:#ff9f9f; border:1px solid #6b2a2a}
+  footer{color:var(--muted); text-align:center; padding:30px 10px}
+  .sticky-score{position:fixed; right:16px; bottom:16px; background:#101a33; border:1px solid #27375f; padding:12px 14px; border-radius:12px}
+  .small{font-size:12px; color:var(--muted)}
+  .ref{margin-top:8px; font-size:12px; color:#8aa2c7}
+  .search{flex:1; min-width:220px; background:#0e172c; color:var(--ink); border:1px solid #253555; padding:10px 12px; border-radius:10px}
+  .hidden{display:none}
 </style>
 </head>
 <body>
 <header>
-  <h1>Applied Microbiology Mega Quiz — 100 Questions</h1>
+  <div class="wrap">
+    <h1>Applied Microbiology – Full Exam (70 MCQs)</h1>
+    <p class="lead">Answer all questions, then click <b>Submit & Grade</b>. Explanations are in Arabic, with lecture source note.</p>
+    <div class="controls">
+      <input id="search" class="search" placeholder="Filter questions (e.g., Staphylococcus, Neisseria, vaccine)"/>
+      <button id="submitBtn">Submit & Grade</button>
+      <button id="showAnswersBtn" class="secondary">Reveal Correct Answers</button>
+      <button id="resetBtn" class="ghost">Reset</button>
+      <button id="exportBtn" class="ghost">Export Results (JSON)</button>
+    </div>
+  </div>
 </header>
-<div class="wrap">
-  <div class="intro">
-    <p>اساله على <b>6 سكاشن</b>. .</p>
-  </div>
 
-  <div id="quiz"></div>
+<main class="wrap" id="container"></main>
 
-  <div class="controls">
-      <button id="calc">Calculate Score</button>
-      <button id="reset" class="secondary">Reset Quiz</button>
-      <div id="score"></div>
-  </div>
-  
-  <div class="sponsorship">
-    <h2>Supported by M.OPI.M</h2>
-    <p>This educational resource is made possible through the generous support of M.OPI.M. Visit their website to discover more innovative learning solutions.</p>
-    <a href="https://mahway-official.github.io/Personal/" class="sponsor-button">Visit M.OPI.M</a>
-  </div>
+<div class="sticky-score" id="scoreBox">
+  <div><b>Score:</b> <span id="score">0 / 70</span></div>
+  <div class="small" id="note">Not submitted</div>
 </div>
 
-<img id="mouse" src="https://cdn.pixabay.com/animation/2022/08/15/08/47/08-47-44-137_512.gif" alt="Dr Mouse"/>
-<div id="toast" class="toast"></div>
+<footer>
+  © 2025 Applied Microbiology Practice | Built for study use (Delta Univ. slides).<br/>
+  Explanations cite: Intro to Microbiology; Host–Parasite Interaction; Staphylococci; Streptococci; Neisseria.
+</footer>
 
 <script>
-const questions = [{"q": "Which medium is liquid in physical state?", "options": ["Nutrient broth", "Nutrient agar", "Motility agar (deep)", "Blood agar"], "answer": 0, "explanation": "الـ broth وسط سائل، ونمو البكتيريا فيه بيظهر كعكارة (turbidity)."}, {"q": "In semi-solid media, non-motile bacteria typically grow as:", "options": ["Turbidity throughout", "Isolated colonies", "Spreading feather-like growth", "Along the stab line only"], "answer": 3, "explanation": "في الوسط شبه الصلب، البكتيريا غير المتحركة بتظهر كنمو على خط الغرز فقط."}, {"q": "Bacterial colonies are seen on:", "options": ["Liquid media", "Solid media", "Candle jar", "Anaerobic jar"], "answer": 1, "explanation": "المستعمرات بتتكون على الأوساط الصلبة زي nutrient/blood agar."}, {"q": "MacConkey agar is best described as:", "options": ["Simple medium", "Enriched medium", "Selective & Differential medium", "Transport medium"], "answer": 2, "explanation": "MacConkey بيمنع Gram+ (bile salts & crystal violet) ويفرق lactose fermenters بـ Neutral red."}, {"q": "Indicator used in MacConkey agar is:", "options": ["Phenol red", "Neutral red", "Bromothymol blue", "Methylene blue"], "answer": 1, "explanation": "الـ indicator في MacConkey هو Neutral red لتمييز تخمير اللاكتوز."}, {"q": "Selective agents in MacConkey agar are:", "options": ["NaCl 7.5%", "Bile salts & crystal violet", "Antibiotics mix", "Eosin & methylene blue"], "answer": 1, "explanation": "أملاح الصفراء وCrystal violet تمنع أغلب الـGram positive."}, {"q": "Mannitol Salt Agar (MSA) is:", "options": ["Enriched only", "Selective & Differential", "Simple", "Transport"], "answer": 1, "explanation": "MSA فيه 7.5% NaCl (selective للـStaphylococci) وPhenol red يفرق تخمير المانيتول."}, {"q": "The carbohydrate and indicator in MSA are respectively:", "options": ["Lactose & Neutral red", "Glucose & Bromothymol blue", "Mannitol & Phenol red", "Sucrose & Methyl red"], "answer": 2, "explanation": "MSA: مانيتول + Phenol red."}, {"q": "EMB agar is commonly used for:", "options": ["Fungi", "Staphylococci", "Enteric Gram-negative bacilli", "Anaerobes"], "answer": 2, "explanation": "EMB انتقائي/تفريقي للأمعائيات (Gram-)، وتعطي E. coli لمعان معدني."}, {"q": "Which shows a metallic green sheen on EMB?", "options": ["Staphylococcus aureus", "Enterococcus faecalis", "Escherichia coli", "Pseudomonas aeruginosa"], "answer": 2, "explanation": "E. coli على EMB غالبًا بيظهر metallic green sheen لتخمير قوي."}, {"q": "Blood agar is primarily considered:", "options": ["Simple medium", "Enriched medium", "Selective medium", "Transport medium"], "answer": 1, "explanation": "Blood agar وسط مُغذّي (enriched) ويمكّن أيضًا التفريق بالتحلل الدموي."}, {"q": "Chocolate agar supports growth of:", "options": ["Fastidious organisms like Neisseria", "Strict anaerobes", "Fungi only", "Thermophiles"], "answer": 0, "explanation": "Chocolate agar (دم مُحلل) يدعم النيسيريا والهيموفيلس (كائنات متطلبة)."}, {"q": "Thayer–Martin medium is used to isolate:", "options": ["Haemophilus influenzae", "Neisseria gonorrhoeae", "Streptococcus pyogenes", "Clostridium perfringens"], "answer": 1, "explanation": "Thayer–Martin (Chocolate + مضادات) انتقائي للنيسيريا."}, {"q": "Cetrimide agar is selective for:", "options": ["Pseudomonas aeruginosa", "E. coli", "Salmonella Typhi", "Staphylococcus aureus"], "answer": 0, "explanation": "Cetrimide agar ينتقي Pseudomonas aeruginosa ويعزز صبغة البيوفيردين."}, {"q": "Selenite F broth is an example of:", "options": ["Simple medium", "Transport medium", "Enrichment broth", "Differential agar"], "answer": 2, "explanation": "Selenite F بيُثري السالمونيلا من عينات مختلطة قبل العزل."}, {"q": "Which is a simple medium?", "options": ["Simmons citrate agar", "Nutrient agar", "Blood agar", "MacConkey agar"], "answer": 1, "explanation": "Nutrient agar وسط بسيط غير انتقائي."}, {"q": "Transport media such as Stuart/Amies are designed to:", "options": ["Promote rapid growth", "Maintain viability without multiplication", "Select for Gram-negative rods", "Detect hemolysis"], "answer": 1, "explanation": "الـ Transport media بتحافظ على العينة حيّة بدون تكاثر لحين الزراعة."}, {"q": "TSI agar is mainly used to:", "options": ["Detect hemolysis", "Assess sugar fermentation and H2S in enterics", "Determine salt tolerance", "Grow anaerobes"], "answer": 1, "explanation": "TSI يفرّق بين أمعائيات حسب تخمير السكريات وإنتاج H2S وغاز."}, {"q": "Which plate is commonly used for antibiotic susceptibility testing?", "options": ["Sabouraud agar", "Mueller–Hinton agar", "Chocolate agar", "Nutrient agar"], "answer": 1, "explanation": "Mueller–Hinton هو المعيار لاختبار الحساسية (Kirby–Bauer)."}, {"q": "Which statement about Sabouraud dextrose agar is true?", "options": ["Selective for Gram- rods", "Favours fungi/yeasts by low pH", "Differential for lactose fermenters", "Contains blood"], "answer": 1, "explanation": "سابورو منخفض pH وغني بالسكريات ليدعم نمو الفطريات."}, {"q": "Streak plate method is primarily for:", "options": ["Measuring zone of inhibition", "Obtaining isolated colonies", "Demonstrating motility", "Growing anaerobes"], "answer": 1, "explanation": "الـ Streak plate بتوزّع البكتيريا لتكوين مستعمرات منفصلة لعزل نقي."}, {"q": "Lawn culture provides:", "options": ["Isolated colonies", "Uniform confluent growth", "Anaerobic conditions", "Hemolysis only"], "answer": 1, "explanation": "Lawn culture بيعمل طبقة نمو موحدة ومهم في اختبار الحساسية."}, {"q": "Stab inoculation is done in:", "options": ["Liquid broth", "Slant agar", "Semi-solid deep", "Plate surface"], "answer": 2, "explanation": "Stab بيتعمل في عمق وسط شبه صلب لتقييم الحركة/الأكسجين."}, {"q": "Stroke inoculation refers to:", "options": ["Aseptic flaming", "Surface streaking on a plate", "Gentle zigzag on slant surface", "Deep puncture in agar"], "answer": 2, "explanation": "Stroke هو تلقيح بلمسة/تمرير على سطح الـslant."}, {"q": "GasPak jar is used to create:", "options": ["Microaerophilic conditions", "Strict anaerobiosis", "High humidity only", "High temperature"], "answer": 1, "explanation": "GasPak مع محفّز البلاديوم يستهلك الأكسجين ويولّد جو لاهوائي."}, {"q": "Candle jar is best for:", "options": ["Strict anaerobes", "Capnophiles/microaerophiles", "Thermophiles", "Halophiles"], "answer": 1, "explanation": "Candle jar يقلل O2 ويرفع CO2 فيفيد الكائنات المحبة لثاني أكسيد الكربون."}, {"q": "Which technique reduces contamination risk?", "options": ["Leaving plates open", "Touching loop before flaming", "Aseptic flaming and minimizing exposure", "Pipetting by mouth"], "answer": 2, "explanation": "التقنيات العقيمة تشمل التعقيم باللهب وتقليل تعريض الوسط للهواء."}, {"q": "During streaking for isolation, you typically divide the plate into:", "options": ["2 sectors", "3–4 sectors", "6 sectors", "No sectors"], "answer": 1, "explanation": "تقسيم 3-4 مناطق يقلل الكثافة تدريجيًا للحصول على عزلات منفصلة."}, {"q": "For Kirby–Bauer testing, the inoculum is standardized to:", "options": ["1.5 McFarland", "0.5 McFarland", "3.0 McFarland", "No standard needed"], "answer": 1, "explanation": "المعيار الشائع 0.5 McFarland لضمان كثافة موحدة."}, {"q": "Why incubate plates inverted (agar up)?", "options": ["Better color", "Avoids condensation dripping onto surface", "Faster growth", "Prevents contamination by CO2"], "answer": 1, "explanation": "القلب يمنع سقوط تكاثف الماء الذي قد يسيّح المستعمرات."}, {"q": "Which method gives a uniform lawn for AST?", "options": ["Streak with loop", "Swabbing in three directions on MH agar", "Single stab", "Pouring molten agar"], "answer": 1, "explanation": "المسحة في ثلاث اتجاهات على Mueller–Hinton تعطي سطحًا موحدًا."}, {"q": "McIntosh–Fildes jar is used for:", "options": ["Fungi", "Aerobes", "Anaerobes", "Thermophiles"], "answer": 2, "explanation": "McIntosh–Fildes jar يوفّر جو لاهوائي باستخدام تفريغ وتحفيز."}, {"q": "A loop should be cooled before touching culture to:", "options": ["Increase colonies", "Prevent aerosol only", "Avoid killing bacteria and aerosols", "Speed up streaking"], "answer": 2, "explanation": "تبريد اللوب بعد التعقيم يمنع قتل البكتيريا وتكوين رذاذ."}, {"q": "Pour plate technique is useful to:", "options": ["Count viable colonies (CFU)", "Create lawn", "Test motility", "AST only"], "answer": 0, "explanation": "الـ Pour plate بيساعد في عدّ وحدات تكوين المستعمرات."}, {"q": "Best vessel for broth cultivation is:", "options": ["Slant tube", "Petri dish", "Screw-cap tube/flask", "Agar deep"], "answer": 2, "explanation": "الوسط السائل يُحضن في أنابيب/فلاسكات محكمة لتجنّب التلوث."}, {"q": "Gram-positive bacteria appear after Gram staining as:", "options": ["Red/Pink", "Purple/Blue", "Colorless", "Green"], "answer": 1, "explanation": "Gram+ تحتفظ بمركب CV-I داخل الجدار السميك فتظهر بنفسجي/أزرق."}, {"q": "Correct order in Gram stain is:", "options": ["Iodine → Crystal violet → Safranin → Alcohol", "Crystal violet → Iodine → Alcohol → Safranin", "Crystal violet → Alcohol → Iodine → Safranin", "Safranin → Alcohol → Crystal violet → Iodine"], "answer": 1, "explanation": "الترتيب: صبغة أساسية CV ثم Iodine ثم إزالة اللون بالكحول ثم Safranin."}, {"q": "Mordant used in Gram stain:", "options": ["Iodine", "Heat", "Acid-alcohol", "Phenol"], "answer": 0, "explanation": "اليود يثبّت البلّورة البنفسجية بتكوين مركب CV-I."}, {"q": "Decolorizer in Gram stain is commonly:", "options": ["Water", "Ethanol/Acetone", "Acid-alcohol", "KOH"], "answer": 1, "explanation": "الكحول/الأسيتون يزيل اللون من Gram- ذات الجدار الرقيق."}, {"q": "Counterstain in Gram stain is:", "options": ["Methylene blue", "Carbol fuchsin", "Safranin", "Malachite green"], "answer": 2, "explanation": "الـ Safranin تلوّن Gram- بالوردي/الأحمر."}, {"q": "Ziehl–Neelsen stain primarily detects:", "options": ["Spores", "Acid-fast bacteria", "Capsules", "Flagella"], "answer": 1, "explanation": "Ziehl–Neelsen تكشف الـ Acid-fast مثل Mycobacterium."}, {"q": "Primary stain in acid-fast staining:", "options": ["Crystal violet", "Carbol fuchsin", "Methylene blue", "Safranin"], "answer": 1, "explanation": "Carbol fuchsin صبغة أساسية تُسخَّن لاختراق الجدار الشمعي."}, {"q": "Mordant in classical Ziehl–Neelsen is:", "options": ["Iodine", "Heat", "Acid-alcohol", "Phenol red"], "answer": 1, "explanation": "التسخين يعمل كمُثبِّت/مُسهّل لاختراق الصبغة."}, {"q": "Decolorizer in acid-fast staining is:", "options": ["Alcohol", "Acid-alcohol", "Water", "Acetone"], "answer": 1, "explanation": "Acid-alcohol يزيل اللون من غير الحمضية فقط."}, {"q": "Counterstain in acid-fast staining:", "options": ["Safranin", "Methylene blue", "Crystal violet", "Malachite green"], "answer": 1, "explanation": "Methylene blue يصبغ غير الحمضية باللون الأزرق."}, {"q": "Acid-fast bacteria appear:", "options": ["Blue after staining", "Red after staining", "Green", "Colorless"], "answer": 1, "explanation": "الكائنات الحمضية تمسك Carbol fuchsin وتظهر حمراء."}, {"q": "Reason for acid-fastness:", "options": ["Thick peptidoglycan", "Mycolic acids in cell wall", "Teichoic acids", "Capsule"], "answer": 1, "explanation": "الأحماض الميكولية الدهنية تمنع إزالة اللون."}, {"q": "Over-decolorization in Gram stain may cause:", "options": ["False Gram-positive", "False acid-fast", "False Gram-negative", "No effect"], "answer": 2, "explanation": "الإزالة المفرطة قد تجعل Gram+ تظهر كأنها Gram-."}, {"q": "Old cultures of Gram-positive may appear:", "options": ["Gram-variable or Gram-negative", "Always purple", "Acid-fast", "Non-stainable"], "answer": 0, "explanation": "قدم العينة قد يضعف الجدار ويعطي Gram-variable."}, {"q": "Kinyoun method differs by:", "options": ["Using no heat (cold method)", "No counterstain", "No decolorizer", "Using iodine as mordant"], "answer": 0, "explanation": "Kinyoun يزيد الفينول/الصبغة بدل التسخين (طريقة باردة)."}, {"q": "Catalase test reagent is:", "options": ["H2O", "H2O2", "KOH", "Nitrate broth"], "answer": 1, "explanation": "نستخدم بيروكسيد الهيدروجين H2O2 ويظهر فقاعات إذا كان الإنزيم موجود."}, {"q": "Catalase positive cocci include:", "options": ["Streptococci", "Enterococci", "Staphylococci", "Lactococci"], "answer": 2, "explanation": "الستاف إيجابي كاتالاز؛ الستربتو/إنترو نيجاتيف."}, {"q": "Coagulase test helps identify:", "options": ["Staphylococcus aureus", "Staphylococcus epidermidis", "Streptococcus pyogenes", "Enterococcus faecalis"], "answer": 0, "explanation": "S. aureus عادة إيجابي Coagulase بينما S. epidermidis سلبي."}, {"q": "Oxidase test detects presence of:", "options": ["Cytochrome c oxidase", "Catalase", "Coagulase", "Peroxidase"], "answer": 0, "explanation": "اختبار الأكسيداز يكشف إنزيم cytochrome c oxidase."}, {"q": "Common oxidase reagent that turns purple is:", "options": ["Kovac’s reagent", "Barritt’s A", "Tetramethyl-p-phenylenediamine (TMPD)", "Ferric chloride"], "answer": 2, "explanation": "TMPD يتأكسد إلى indophenol أزرق/بنفسجي."}, {"q": "Indole test detects enzyme:", "options": ["Urease", "Tryptophanase", "Citrate permease", "Decarboxylase"], "answer": 1, "explanation": "التربتوفاناز يحوّل التربتوفان لإندول؛ يظهر بحلقة حمراء مع Kovac’s."}, {"q": "Positive indole reaction appears as:", "options": ["Blue slant", "Black precipitate", "Red ring at top", "Green slant"], "answer": 2, "explanation": "حلقة حمراء عليا مع كوافاك تعني إنتاج إندول."}, {"q": "Methyl Red positive indicates:", "options": ["Strong acid production (mixed-acid fermentation)", "Acetoin production", "Citrate utilization", "Urea hydrolysis"], "answer": 0, "explanation": "MR موجب يعني حموضة ثابتة (E. coli غالبًا)."}, {"q": "Voges–Proskauer (VP) detects:", "options": ["Lactose fermentation", "Acetoin (2,3-butanediol pathway)", "H2S production", "Gas only"], "answer": 1, "explanation": "VP يكشف الأسيتوين باستخدام كاشفي بارِت."}, {"q": "Barritt’s reagents are:", "options": ["Alpha-naphthol & KOH", "Kovac’s & HCl", "Ferric chloride & HCl", "Sulfanilic acid & α-naphthylamine"], "answer": 0, "explanation": "VP: ألفا نافثول + KOH لأكسدة الأسيتوين للون الأحمر."}, {"q": "Simmons citrate test uses indicator:", "options": ["Phenol red", "Bromothymol blue", "Neutral red", "Methyl red"], "answer": 1, "explanation": "بروموثيمول بلو يتحول لأزرق عند قلوية نتيجة استخدام السترات."}, {"q": "Citrate positive appears as:", "options": ["Deep red ring", "Blue slant/growth", "Black butt", "Pink broth"], "answer": 1, "explanation": "نمو ولون أزرق يدل على استخدام السترات كمصدر وحيد للكربون."}, {"q": "Urease positive reaction:", "options": ["Medium turns pink", "Medium turns blue", "Black precipitate", "Gas bubbles only"], "answer": 0, "explanation": "هيدروlysis اليوريا ينتج NH3 يرفع pH فيحوّل Phenol red للوردي."}, {"q": "Rapid urease positive genus is:", "options": ["Escherichia", "Proteus", "Salmonella", "Shigella"], "answer": 1, "explanation": "Proteus مشهور بنشاط يورييز سريع → لون وردي قوي."}, {"q": "TSI K/A with H2S means:", "options": ["Lactose fermenter", "Glucose only fermentation, H2S produced", "No sugar used", "Sucrose only"], "answer": 1, "explanation": "K/A: قلوية slant وحموضة butt = جلوكوز فقط + H2S أسود."}, {"q": "Gas production in TSI appears as:", "options": ["Blue color", "Cracks/lifting of agar", "Blackening", "Green sheen"], "answer": 1, "explanation": "الغاز يعمل شقوق ورفع للآجار."}, {"q": "H2S indicator system in TSI involves:", "options": ["Ferric ions & thiosulfate", "Neutral red & lactose", "Phenol red only", "Bile salts"], "answer": 0, "explanation": "يتكوّن راسب أسود (FeS) من كبريتيد الهيدروجين مع الحديد."}, {"q": "Typical H2S producer among enterics:", "options": ["Salmonella enterica", "Shigella sonnei", "Escherichia coli", "Klebsiella pneumoniae"], "answer": 0, "explanation": "السالمونيلا غالبًا تنتج H2S، بينما الشيجلا لا."}, {"q": "Nitrate reduction test: red after adding reagents A & B indicates:", "options": ["No reduction", "Reduction to nitrite", "Complete reduction to nitrogen", "Contamination"], "answer": 1, "explanation": "اللون الأحمر بعد A+B يعني وجود نيتريت ناتج عن الاختزال."}, {"q": "If no color after A & B, red only after zinc indicates:", "options": ["Positive complete reduction", "Negative (nitrate still present)", "Inconclusive", "Contamination"], "answer": 1, "explanation": "الزنك يختزل النترات لنّيتريت ويُظهر الأحمر → يعني البكتيريا لم تختزلها (سلبي)."}, {"q": "If still colorless even after zinc, that indicates:", "options": ["Positive (reduced beyond nitrite)", "Negative", "Invalid", "Gram-variable"], "answer": 0, "explanation": "بدون لون بعد الزنك → النترات اختُزلت لغاز N2/أمونيا (اختزال كامل)."}, {"q": "Phenylalanine deaminase (PAD) positive turns:", "options": ["Green with ferric chloride", "Pink with phenol red", "Black with H2S", "Blue with BTB"], "answer": 0, "explanation": "نزع أمين الفينيل ألانين يعطي لون أخضر مع كلوريد الحديديك (مثبت في Proteus)."}, {"q": "DNase test positive shows:", "options": ["Black precipitate", "Clear zone around growth", "Gas bubbles", "Metallic sheen"], "answer": 1, "explanation": "تحلّل DNA يسبب منطقة شفافة حول النمو على DNase agar (S. aureus)."}, {"q": "Bile esculin positive appears as:", "options": ["Green slant", "Blackening of medium", "Pink broth", "No change"], "answer": 1, "explanation": "تحلّل الإسكولين بوجود بيل يعطي مركبات مع الحديد تُسود الوسط (Enterococcus)."}, {"q": "Motility in a semi-solid medium is seen as:", "options": ["Growth only along stab line", "Diffuse hazy spread from the line", "Colonies on surface", "Black butt"], "answer": 1, "explanation": "الحركة تُرى كانتشار عكاري بعيدًا عن خط الغرز."}, {"q": "Which combination identifies S. aureus among staphylococci?", "options": ["Catalase– & Coagulase–", "Catalase+ & Coagulase+", "Oxidase+ & Catalase–", "Urease+ & MR+"], "answer": 1, "explanation": "S. aureus عادةً Catalase+ وCoagulase+."}, {"q": "Why avoid scraping colonies from blood agar for catalase slide test?", "options": ["Too many colonies", "RBC catalase may give false positive", "Plate dries quickly", "Indicator interferes"], "answer": 1, "explanation": "كريات الدم الحمراء فيها كاتالاز → فقاعات خاطئة."}, {"q": "Kovac’s reagent is used in:", "options": ["Indole test", "MR test", "VP test", "Citrate test"], "answer": 0, "explanation": "كوافاك يُظهر حلقة الإندول الحمراء."}, {"q": "Enterobacter/Klebsiella are typically:", "options": ["MR+ VP–", "MR– VP+", "MR+ VP+", "MR– VP–"], "answer": 1, "explanation": "عادة MR سلبي وVP إيجابي لمسار 2,3-بوتانديول."}, {"q": "E. coli profile among IMViC is often:", "options": ["++--", "--++", "+--+", "-+-+"], "answer": 0, "explanation": "IMViC لإيشيريشيا كولي غالبًا Indole+, MR+, VP–, Citrate– (أي ++--)."},       {q:"Urease negative among these is most likely:", options:["Proteus mirabilis","Klebsiella pneumoniae","Escherichia coli","Morganella morganii"], answer:2, explanation:"E. coli عادة سلبي يورييز مقارنةً بالباقي."}, {"q": "Which test differentiates Enterococcus by rapid hydrolysis?", "options": ["Bile esculin", "DNase", "PAD", "Oxidase"], "answer": 0, "explanation": "Enterococcus إيجابي Bile esculin (اسوداد الوسط)."},       {q:"Oxidase is typically negative in:", options:["Pseudomonas aeruginosa","Neisseria spp.","Enterobacteriaceae","Vibrio cholerae"], answer:2, explanation:"معظم الأمعائيات سلبية أكسيداز."}, {"q": "Standard medium for Kirby–Bauer disk diffusion is:", "options": ["Nutrient agar", "Mueller–Hinton agar", "Blood agar", "MacConkey agar"], "answer": 1, "explanation": "Mueller–Hinton هو الوسط القياسي لاختبار الحساسية."}, {"q": "Inoculum for Kirby–Bauer is adjusted to:", "options": ["0.25 McFarland", "0.5 McFarland", "1.0 McFarland", "No standard"], "answer": 1, "explanation": "التوحيد على 0.5 McFarland يضمن نتائج قابلة للمقارنة."}, {"q": "Plates for AST should have agar depth of about:", "options": ["2 mm", "4 mm", "8 mm", "10 mm"], "answer": 1, "explanation": "العمق القياسي ~4 مم يؤثر مباشرة على حجم الهالة."}, {"q": "After swabbing the plate for AST, antibiotic disks should be applied within:", "options": ["5–15 minutes", "1 hour", "3 hours", "No time limit"], "answer": 0, "explanation": "التأخير يؤثر على الانتشار الأولي للمضاد وبالتالي على النتائج."}, {"q": "Zone of inhibition is measured in:", "options": ["cm", "mm", "inches", "arbitrary units"], "answer": 1, "explanation": "الأقطار تُقاس بالملّيمتر وتقارن بجداول التفسير."}, {"q": "Larger zone generally indicates:", "options": ["Resistance", "Intermediate", "Susceptibility", "Contamination"], "answer": 2, "explanation": "كلما كبرت الهالة عادةً زادت الحساسية للمضاد."}, {"q": "Which factor does NOT significantly affect zone size?", "options": ["Agar depth", "Inoculum density", "Disk potency", "Plate label color"], "answer": 3, "explanation": "لون اللصاقة لا يؤثر؛ بقية العوامل تؤثر."}, {"q": "Mueller–Hinton agar is preferred because it:", "options": ["Contains blood cells", "Has consistent composition and good diffusion", "Is selective for Gram+", "Is enriched"], "answer": 1, "explanation": "MHA تركيبه موحّد ويسمح بانتشار جيد للمضادات."}, {"q": "AST plates are incubated:", "options": ["Inverted at 35–37°C", "Upright at 28°C", "In CO2 jar always", "At 50°C"], "answer": 0, "explanation": "عادةً على 35–37° مقلوبة لتفادي التكاثف."}, {"q": "Reading AST is done after approximately:", "options": ["16–18 hours incubation", "2–4 hours", "3 days", "1 week"], "answer": 0, "explanation": "القراءة القياسية غالبًا بعد 16–18 ساعة."}, {"q": "Uniform lawn for AST is achieved by:", "options": ["Loop streaking", "Sterile swab in three directions", "Single central streak", "Deep stab"], "answer": 1, "explanation": "مسحة بثلاث اتجاهات تعطي سطحًا موحّدًا."}, {"q": "If colonies grow within the inhibition zone, this suggests:", "options": ["Pure susceptibility", "Heteroresistance/contamination", "Incorrect agar pH only", "Reading error only"], "answer": 1, "explanation": "نمو داخل الهالة قد يشير لمزيج مقاوم أو تلوث."}, {"q": "E-test strips are used to determine:", "options": ["MIC (gradient method)", "MBC only", "Hemolysis", "Motility"], "answer": 0, "explanation": "E-test يعطي تدرج تركيز لتحديد MIC عند نقطة تقاطع الهالة."}, {"q": "McFarland 0.5 standard approximates:", "options": ["~1.5 × 10^8 CFU/mL", "~1.5 × 10^6 CFU/mL", "~10^4 CFU/mL", "~10^9 CFU/mL"], "answer": 0, "explanation": "تقريبًا 1.5 × 10^8 CFU/مل لقياس كثافة التعليق الجرثومي."}, {"q": "Which statement about antibiotic diffusion is true?", "options": ["Diffuses more in thicker agar", "Diffuses radially from the disk", "Diffusion stops at 4 hours", "Does not depend on temperature"], "answer": 1, "explanation": "المضاد ينتشر شعاعيًا من القرص عبر الآجار."}, {"q": "Why avoid placing disks too close together?", "options": ["For aesthetics only", "Zones may overlap and be hard to interpret", "Prevents drying", "Reduces potency"], "answer": 1, "explanation": "تداخل الهالات يعقّد القياس الصحيح."}, {"q": "For fastidious organisms, AST may require:", "options": ["Chocolate agar with supplements", "Plain water agar", "No medium", "Anaerobic jar only"], "answer": 0, "explanation": "كائنات متطلبة قد تحتاج أوساط مُدعّمة لتقييم الحساسية."}, {"q": "Result categories in disk diffusion are:", "options": ["A/B/C", "Positive/Negative", "Susceptible/Intermediate/Resistant", "Alive/Dead"], "answer": 2, "explanation": "تُفسَّر القيم إلى S أو I أو R حسب الجداول."}, {"q": "If agar depth is less than recommended, zones will appear:", "options": ["Smaller than expected", "Larger than expected", "Unaffected", "Square"], "answer": 1, "explanation": "الآجار الأنحف يسمح بانتشار أكبر → هالات أكبر زائفة."}];
-const phrases = ["برافو يا نجم 🌟", "إنت جامد أوي 👌", "عاش يا دكتور 🥼", "ما شاء الله عليك 💯", "إجابتك زي الفل 🌹", "كده تمام يا معلم 🙌", "الله ينور 👏", "مخك ماسورة معلومات 🤓", "انت قافش المادة 🔥", "شغل عظمة يا دكتور 🧠", "انت قدها 💪", "أيوه كده ✌️", "تمام التمام ✅", "ولا غلطة 👌", "الاجابة دي درس خصوصي 🔥", "دماغك كبيرة 🎓", "أجدع إجابة 👏", "انت شبح الميكرو 😎", "ولا الأوائل 👌", "مافيش بعد كده 🌟", "تحفة 👏", "يا برنس 💯", "عاااش", "ملك الإجابات 👑", "يا دكتور الجامدين 🙌", "ضحكتني واجابتك صح 😂", "انت مش سايبلي فرصة أغلطك 🤔", "ده انت مذاكر كويس 🥳", "كبير يا عم 👏", "عظمة يا مان 🔥", "شغل فاخر 🏆", "مافيش غلطة 👌", "حوار كبير منك 🤩", "ياسلام عليك يا معلم 🎯", "انت متسطر جامد 📚", "برافو يا أسطورة 🐐", "كده نخش الامتحان واحنا مطمنين 🙏", "عالي اوووي 👌", "رايق في المذاكرة ☕", "انت كده استاذي ❤️", "تحفة يا فنان 🎨", "كده الميكرو تحت السيطرة 😎", "خليتني فرحان بيك 🥹", "ده انت ملك ال MCQ 👑", "انت قاهر الأسئلة 👊", "فارس المعمل 🧪", "الدكتور هيصفقلك 👏", "شغل بطولي 💥", "راجل فاهم جامد 🔥", "تمام يا بطل 🦸"];
+const QUESTIONS = [
+  // ===== Part A – From user's own questions (1–19) =====
+  {q:"S.aureus colonies on blood agar are:", opts:["delta hemolytic","gamma hemolytic","alpha hemolytic","none of these"], ans:3, exp:"S. aureus يُحدث β-hemolysis (منطقة شفافة حول المستعمرات)، ولأن الاختيارات لا تشمل β → إذن الإجابة الصحيحة \"none of these\". المصدر: Lecture 3 – Staphylococci (blood agar features).", ref:"Staphylococci lecture"},
+  {q:"S.aureus on MacConkey’s agar containing inhibitory substance for gram-positive cocci:", opts:["golden yellow colonies","yellow colonies","none of these","pink colonies"], ans:2, exp:"MacConkey يحتوي أملاح صفراء وصفراء الصفراء التي تُثبط Gram-positive؛ لذلك لا يعطي مستعمرات مميزة لـ S. aureus. المصدر: Lecture 3 – Staphylococci (media).", ref:"Staphylococci lecture"},
+  {q:"The coagulase test is used to differentiate S. aureus from:", opts:["streptococci","E. coli","pneumococci","other staphylococci"], ans:3, exp:"اختبار الكوناجيوليز يُميّز S. aureus (إيجابي) عن باقي الستاڤيلو كوكس (سالبة). المصدر: Lecture 3 – Staphylococci.", ref:"Staphylococci lecture"},
+  {q:"Differentiate between S. epidermidis and S. saprophyticus:", opts:["bacitracin sensitivity","novobiocin sensitivity","coagulase test","penicillin sensitivity"], ans:1, exp:"S. epidermidis حساس للـ Novobiocin بينما S. saprophyticus مقاوم. المصدر: Lecture 3 – Staphylococci.", ref:"Staphylococci lecture"},
+  {q:"S. aureus colonies on nutrient agar are:", opts:["white with no pigment","white with pigment","golden yellow-white","whitish grey"], ans:2, exp:"S. aureus غالبًا يكون له صبغة ذهبية (golden yellow) على nutrient agar. المصدر: Lecture 3 – Staphylococci.", ref:"Staphylococci lecture"},
+  {q:"The coagulase test is used to differentiate:", opts:["S. epidermidis from Neisseria meningitidis","S. aureus from S. epidermidis","S. pyogenes from Enterococcus faecalis","S. pyogenes from S. aureus"], ans:1, exp:"S. aureus (coagulase-positive) مقابل S. epidermidis (coagulase-negative). المصدر: Lecture 3 – Staphylococci.", ref:"Staphylococci lecture"},
+  {q:"Staphylococcus bacteria secrete all, EXCEPT:", opts:["cellulose","coagulase","lecithinase","lipase"], ans:0, exp:"الستاڤيلوكوكس تُنتج إنزيمات كثيرة، لكن لا تُنتج cellulose. المصدر: Lecture 3 – Staphylococci (enzymes).", ref:"Staphylococci lecture"},
+  {q:"Infection means", opts:["The establishment of a microorganism within a host","Any microorganism that has the capacity to cause disease","Opportunistic pathogens require a defect in immune defense","Quantitative measure of pathogenicity"], ans:0, exp:"التعريف في المحاضرات: العدوى هي استقرار/تواجد الميكروب داخل العائل. المصدر: Lecture 1 – Introduction / Lecture 2 – Host–Parasite.", ref:"Intro / Host–Parasite"},
+  {q:"Clostridium bacillus is:", opts:["Obligate aerobe","Facultative aerobe","Facultative anaerobe","Strict anaerobe"], ans:3, exp:"الكلوستريديوم لا تنمو في وجود الأكسجين (strict anaerobes). مذكور ضمن التعاريف العامة. المصدر: Lecture 1 – Introduction.", ref:"Introduction lecture"},
+  {q:"Capsular Swelling Test (Quellung reaction) is used for:", opts:["Enterococcus faecalis","S. agalactiae","S. viridans","S. pneumoniae"], ans:3, exp:"اختبار الانتفاخ الكبسولي (Quellung) لتشخيص S. pneumoniae. المصدر: Lecture 4 – Streptococci.", ref:"Streptococci lecture"},
+  {q:"α-hemolytic streptococci are also known as:", opts:["S. viridans","Enterobacter","S. pyogenes","Coagulase negative staph"], ans:0, exp:"المجموعة المعروفة بالـ viridans هي α-hemolytic. المصدر: Lecture 4 – Streptococci.", ref:"Streptococci lecture"},
+  {q:"Gram-negative cocci are:", opts:["streptococci","staphylococci","Neisseria","Salmonella"], ans:2, exp:"النييسرية هي مكورات سالبة الجرام (diplococci). المصدر: Lecture 5 – Neisseria.", ref:"Neisseria lecture"},
+  {q:"The following species of staphylococci are coagulase positive:", opts:["S. epidermidis","S. saprophyticus","S. hominis","S. aureus"], ans:3, exp:"S. aureus هو الأنواع الرئيسية الإيجابية للكوناجيوليز. المصدر: Lecture 3 – Staphylococci.", ref:"Staphylococci lecture"},
+  {q:"S. aureus differs from S. epidermidis by:", opts:["Forms white colonies","Is coagulase positive","Causes endocarditis on the prosthetic valve","Common cause of UTI"], ans:1, exp:"الفرق الرئيسي الإكلينيكي/المعملي: S. aureus موجب الكوناجيوليز، بينما S. epidermidis سالب. المصدر: Lecture 3 – Staphylococci.", ref:"Staphylococci lecture"},
+  {q:"Novobiocin sensitivity test is used to differentiate between:", opts:["S.epidermidis and S.saprophyticus","S.aureus and S.saprophyticus","S.epidermidis and S.hominis","S.aureus and S.epidermidis"], ans:0, exp:"S. epidermidis حساس، S. saprophyticus مقاوم. المصدر: Lecture 3 – Staphylococci.", ref:"Staphylococci lecture"},
+  {q:"Neisseria gonorrhoeae is", opts:["all of these","glucose fermentation but not maltose","oxidase positive","catalase positive"], ans:0, exp:"N. gonorrhoeae مؤكسدة موجبة، كاتالاز موجبة، وتخمر الجلوكوز فقط. المصدر: Lecture 5 – Neisseria.", ref:"Neisseria lecture"},
+  {q:"Normal flora is present in all of these sites except", opts:["throat","stool","urine","mouth"], ans:2, exp:"البول الطبيعي معقم. المصدر: Lecture 1 – Introduction.", ref:"Introduction lecture"},
+  {q:"Selective media for staph aureus is:", opts:["Blood agar","MSA agar","MacConkey’s agar","Nutrient agar"], ans:1, exp:"Mannitol Salt Agar (ملح عالي + مانيتول) انتقائي للستاف. المصدر: Lecture 3 – Staphylococci.", ref:"Staphylococci lecture"},
+  {q:"Opportunistic pathogens", opts:["Opportunistic pathogens requiring a defect in the immune defense","Any microorganism that has the capacity to cause disease","The establishment of a microorganism within a host","Quantitative measure of pathogenicity"], ans:0, exp:"تعريف الـ opportunists: تُسبب مرضًا عند وجود عيب مناعي. المصدر: Lecture 2 – Host–Parasite.", ref:"Host–Parasite lecture"},
 
-const quiz = document.getElementById('quiz');
-let score = 0;
-let answered = Array(questions.length).fill(false);
+  // ===== Part B – 50-question bank (20–70 overall, indexed here sequentially) =====
+  {q:"Microorganisms that cause disease are called:", opts:["Commensals","Pathogens","Normal flora","Saprophytes"], ans:1, exp:"Pathogens = مُمرِضات. المصدر: Lecture 1 – Introduction.", ref:"Introduction lecture"},
+  {q:"The study of microorganisms is called:", opts:["Biology","Microbiology","Pathology","Immunology"], ans:1, exp:"تعريف عام. المصدر: Lecture 1 – Introduction.", ref:"Introduction lecture"},
+  {q:"Virulence is defined as:", opts:["Ability of a pathogen to invade a host","Quantitative measure of pathogenicity","Defect in host immunity","Commensal behavior"], ans:1, exp:"الفوعة = قياس كمي للإمراضية. المصدر: Lecture 1 – Introduction.", ref:"Introduction lecture"},
+  {q:"Infection means:", opts:["Presence of toxins in host","Establishment of microorganism within a host","Defect in immune defense","Normal flora existence"], ans:1, exp:"التعريف بالنص. المصدر: Lecture 1 / Lecture 2.", ref:"Intro / Host–Parasite"},
+  {q:"Opportunistic pathogens require:", opts:["Normal flora","Defect in immune defense","Anaerobic condition","Virulence factors"], ans:1, exp:"تحتاج لخلل مناعي. المصدر: Lecture 2 – Host–Parasite.", ref:"Host–Parasite lecture"},
+  {q:"The host that harbors a pathogen without symptoms is:", opts:["Reservoir","Carrier","Vector","Host"], ans:1, exp:"الحامل Carrier لا يظهر عليه أعراض. المصدر: Lecture 2 – Host–Parasite.", ref:"Host–Parasite lecture"},
+  {q:"Mutualism means:", opts:["One benefits, other harmed","Both benefit","One benefits, other unaffected","None"], ans:1, exp:"تكافل نَفعي للطرفين. المصدر: Lecture 2 – Host–Parasite.", ref:"Host–Parasite lecture"},
+  {q:"Disease in high numbers at same time:", opts:["Endemic","Epidemic","Pandemic","Sporadic"], ans:1, exp:"وباء = زيادة مفاجئة في الحالات. المصدر: Lecture 2 – Host–Parasite.", ref:"Host–Parasite lecture"},
+  {q:"Disease worldwide is:", opts:["Pandemic","Endemic","Sporadic","Epidemic"], ans:0, exp:"جائحة = انتشار عالمي. المصدر: Lecture 2 – Host–Parasite.", ref:"Host–Parasite lecture"},
+  {q:"Staphylococcus are:", opts:["Gram-positive cocci in clusters","Gram-negative cocci","Gram-positive bacilli","Gram-negative bacilli"], ans:0, exp:"عنقودية موجبة الجرام. المصدر: Lecture 3 – Staphylococci.", ref:"Staphylococci lecture"},
+  {q:"Selective medium for S. aureus:", opts:["Nutrient agar","MSA agar","Blood agar","MacConkey agar"], ans:1, exp:"MSA انتقائي. المصدر: Lecture 3.", ref:"Staphylococci lecture"},
+  {q:"S. aureus on nutrient agar appears:", opts:["White","Golden yellow","Pink","Grey"], ans:1, exp:"صبغة ذهبية. المصدر: Lecture 3.", ref:"Staphylococci lecture"},
+  {q:"Coagulase test differentiates S. aureus from:", opts:["Streptococci","Other staphylococci","Pneumococci","Enterococci"], ans:1, exp:"S. aureus موجب. المصدر: Lecture 3.", ref:"Staphylococci lecture"},
+  {q:"S. epidermidis vs S. saprophyticus test is:", opts:["Novobiocin sensitivity","Bacitracin sensitivity","Coagulase","Penicillin"], ans:0, exp:"Novobiocin. المصدر: Lecture 3.", ref:"Staphylococci lecture"},
+  {q:"Enzyme not secreted by staphylococci:", opts:["Cellulose","Lipase","Coagulase","Lecithinase"], ans:0, exp:"لا تنتج cellulose. المصدر: Lecture 3.", ref:"Staphylococci lecture"},
+  {q:"Hemolysis of S. aureus on blood agar:", opts:["Beta hemolysis","Alpha hemolysis","Gamma hemolysis","None"], ans:0, exp:"β-hemolysis. المصدر: Lecture 3.", ref:"Staphylococci lecture"},
+  {q:"Main coagulase positive species:", opts:["S. saprophyticus","S. aureus","S. hominis","S. epidermidis"], ans:1, exp:"S. aureus. المصدر: Lecture 3.", ref:"Staphylococci lecture"},
+  {q:"Staphylococcal food poisoning caused by:", opts:["Enterotoxin","Exfoliative toxin","Endotoxin","Coagulase"], ans:0, exp:"السم المعوي. المصدر: Lecture 3.", ref:"Staphylococci lecture"},
+  {q:"S. aureus catalase:", opts:["Negative","Positive","Variable","None"], ans:1, exp:"ستاف = catalase +. المصدر: Lecture 3.", ref:"Staphylococci lecture"},
+  {q:"Streptococci are:", opts:["Gram-negative cocci","Gram-positive cocci in chains","Gram-positive rods","Gram-negative rods"], ans:1, exp:"سلاسل موجبة الجرام. المصدر: Lecture 4 – Streptococci.", ref:"Streptococci lecture"},
+  {q:"S. pyogenes is:", opts:["Group A beta-hemolytic","Group B alpha-hemolytic","Group D non-hemolytic","Gamma-hemolytic"], ans:0, exp:"GAS β-hemolytic. المصدر: Lecture 4.", ref:"Streptococci lecture"},
+  {q:"Bacitracin sensitivity test is for:", opts:["S. pneumoniae","S. pyogenes","S. agalactiae","Enterococcus"], ans:1, exp:"مميز لـ Group A. المصدر: Lecture 4.", ref:"Streptococci lecture"},
+  {q:"CAMP test identifies:", opts:["Group A strep","Group B strep","Group C strep","Group D strep"], ans:1, exp:"GBS إيجابي CAMP. المصدر: Lecture 4.", ref:"Streptococci lecture"},
+  {q:"ASO test detects:", opts:["Antibodies against Streptolysin O","Antibodies against M protein","Exotoxin A","Capsule antigen"], ans:0, exp:"قياس أضداد SLO. المصدر: Lecture 4.", ref:"Streptococci lecture"},
+  {q:"Rheumatic fever follows:", opts:["Pharyngitis due to S. pyogenes","Skin infections","Meningitis","UTI"], ans:0, exp:"بعد التهاب حلق بستربتوكوكاي. المصدر: Lecture 4.", ref:"Streptococci lecture"},
+  {q:"Acute glomerulonephritis follows:", opts:["S. pneumoniae","Skin infections with S. pyogenes","S. agalactiae","Enterococcus"], ans:1, exp:"بعد عدوى جلدية بستربتوكوكاي. المصدر: Lecture 4.", ref:"Streptococci lecture"},
+  {q:"Quellung reaction identifies:", opts:["S. pyogenes","S. pneumoniae","S. agalactiae","Viridans streptococci"], ans:1, exp:"انتفاخ كبسولي للـ Pneumococcus. المصدر: Lecture 4.", ref:"Streptococci lecture"},
+  {q:"Viridans streptococci cause:", opts:["Acute endocarditis","Subacute endocarditis","Meningitis","UTI"], ans:1, exp:"تُسبب SBE خاصة مع صمامات متأذية. المصدر: Lecture 4.", ref:"Streptococci lecture"},
+  {q:"Enterococcus is differentiated by:", opts:["Growth in 6.5% NaCl","Coagulase test","Bacitracin test","CAMP test"], ans:0, exp:"ينمو في 6.5% NaCl. المصدر: Lecture 4.", ref:"Streptococci lecture"},
+  {q:"Neisseria are:", opts:["Gram-negative diplococci","Gram-positive diplococci","Gram-negative bacilli","Gram-positive bacilli"], ans:0, exp:"دبلوكوكس سالب الجرام. المصدر: Lecture 5 – Neisseria.", ref:"Neisseria lecture"},
+  {q:"N. gonorrhoeae ferments:", opts:["Glucose only","Glucose & maltose","Maltose only","Lactose"], ans:0, exp:"تخمر الجلوكوز فقط. المصدر: Lecture 5.", ref:"Neisseria lecture"},
+  {q:"N. meningitidis ferments:", opts:["Glucose only","Glucose & maltose","Lactose","None"], ans:1, exp:"تخمر الجلوكوز والمالتوز. المصدر: Lecture 5.", ref:"Neisseria lecture"},
+  {q:"Selective medium for Neisseria:", opts:["Blood agar","Thayer-Martin agar","Nutrient agar","Chocolate agar"], ans:1, exp:"MTM/Thayer–Martin (Chocolate + مضادات). المصدر: Lecture 5.", ref:"Neisseria lecture"},
+  {q:"Virulence factor of N. gonorrhoeae:", opts:["Pili","Endospore","Capsule","Flagella"], ans:0, exp:"الأهداب للالتصاق، الخلايا المُهدبة هي الأشد إمراضًا. المصدر: Lecture 5.", ref:"Neisseria lecture"},
+  {q:"Disease caused by N. gonorrhoeae:", opts:["Gonorrhea","Meningitis","Pneumonia","UTI"], ans:0, exp:"السيلان. المصدر: Lecture 5.", ref:"Neisseria lecture"},
+  {q:"Capsule swelling test for N. meningitidis:", opts:["Quellung reaction","CAMP test","ASO test","Oxidase test"], ans:0, exp:"Quellung للتعرف على الكبسولة. المصدر: Lecture 5.", ref:"Neisseria lecture"},
+  {q:"Main reservoir of N. meningitidis:", opts:["Nasopharynx carriers","Animals","Soil","Water"], ans:0, exp:"حَمَلة البلعوم الأنفي. المصدر: Lecture 5.", ref:"Neisseria lecture"},
+  {q:"Treatment of gonorrhea:", opts:["Ceftriaxone","Penicillin always","Vancomycin","Rifampicin"], ans:0, exp:"الخطة الأشيع المذكورة بالمحاضرة: سيفترياكسون. المصدر: Lecture 5.", ref:"Neisseria lecture"},
+  {q:"Prevention of meningococcal disease:", opts:["Multivalent polysaccharide vaccine","Toxoid vaccine","ASO vaccine","No vaccine"], ans:0, exp:"لقاحات متعددة التكافؤ: A, C, Y, W135. المصدر: Lecture 5.", ref:"Neisseria lecture"},
+  {q:"Normal flora absent in:", opts:["Stool","Throat","Urine","Mouth"], ans:2, exp:"البول الطبيعي معقم. المصدر: Lecture 1.", ref:"Introduction lecture"},
+  {q:"Commensals are organisms that:", opts:["Benefit without harming host","Always cause disease","Require immune defect","Obligate pathogens"], ans:0, exp:"عيش تكافلي لصالحها دون ضرر للمضيف. المصدر: Lecture 1/2.", ref:"Intro / Host–Parasite"},
+  {q:"Pandemic disease is:", opts:["Worldwide","Sporadic","Local","Seasonal"], ans:0, exp:"انتشار عالمي. المصدر: Lecture 2.", ref:"Host–Parasite lecture"},
+  {q:"Epidemic means:", opts:["Sudden increase in cases","Constant presence","Worldwide","Sporadic"], ans:0, exp:"وباء = ارتفاع مفاجئ. المصدر: Lecture 2.", ref:"Host–Parasite lecture"},
+  {q:"Gram stain of Neisseria shows:", opts:["Gram-negative diplococci","Gram-positive chains","Gram-positive clusters","Gram-negative rods"], ans:0, exp:"دبلوكوكس سالب الجرام، غالبًا داخل الخلايا. المصدر: Lecture 5.", ref:"Neisseria lecture"},
+  {q:"Oxidase test for Neisseria:", opts:["Positive","Negative","Variable","None"], ans:0, exp:"نييسرية مؤكسدة موجبة. المصدر: Lecture 5.", ref:"Neisseria lecture"},
+  {q:"S. pneumoniae morphology is:", opts:["Gram-positive diplococci","Gram-negative diplococci","Gram-positive chains","Gram-negative bacilli"], ans:0, exp:"دبلو-كوكس موجب الجرام شبيه الحَبّة. المصدر: Lecture 4.", ref:"Streptococci lecture"},
+  {q:"Enterococcus faecalis grows in presence of:", opts:["6.5% NaCl","1% bile","Oxygen only","Novobiocin"], ans:0, exp:"اختبار تحمل الملح. المصدر: Lecture 4.", ref:"Streptococci lecture"},
+  {q:"Staphylococcus is catalase:", opts:["Positive","Negative","Variable","None"], ans:0, exp:"ستاف موجبة الكاتالاز. المصدر: Lecture 3.", ref:"Staphylococci lecture"},
+  {q:"Streptococcus is catalase:", opts:["Negative","Positive","Variable","None"], ans:0, exp:"ستربتو سالبة الكاتالاز. المصدر: Lecture 4.", ref:"Streptococci lecture"},
+  {q:"Staphylococcal toxin causing scalded skin syndrome:", opts:["Exfoliative toxin","Enterotoxin","Endotoxin","Hemolysin"], ans:0, exp:"السم المقشِّر يسبب SSSS. المصدر: Lecture 3.", ref:"Staphylococci lecture"},
+  {q:"Primary site of N. gonorrhoeae infection in females:", opts:["Cervix","Ovary","Uterus","Fallopian tube"], ans:0, exp:"الموقع الأكثر شيوعًا: عنق الرحم (cervicitis). المصدر: Lecture 5.", ref:"Neisseria lecture"}
+];
 
-questions.forEach((q,i)=>{
-  const block = document.createElement('div');
-  block.className = 'question';
-  block.innerHTML = `<div class="qhead"><span style="opacity:.6">Q${i+1}.</span> ${q.q}</div>`;
-  const opts = document.createElement('div'); opts.className='options';
-  q.options.forEach((opt, j)=>{
-    const label = document.createElement('label');
-    label.innerHTML = `<input type="radio" name="q${i}" value="${j}"> ${opt}`;
-    label.addEventListener('click', (ev)=>{
-      if(answered[i]) return;
-      const chosen = j;
-      const fb = block.querySelector('.feedback') || document.createElement('div');
-      fb.className = 'feedback';
-      if(chosen === q.answer) {
-        fb.textContent = '✅ Correct!';
-        fb.classList.add('correct');
-        if(!answered[i]) { score++; answered[i]=true; }
-        showMousePhrase();
-      } else {
-        fb.innerHTML = `❌ Wrong!<br>✅ Correct answer: <b>${q.options[q.answer]}</b><br>💡 Explanation: ${q.explanation}`;
-        fb.classList.add('incorrect');
-        answered[i]=true;
-      }
-      if(!block.querySelector('.feedback')) block.appendChild(fb);
-    }, {capture:false});
-    opts.appendChild(label);
+// Render
+const container = document.getElementById('container');
+function render(list=QUESTIONS){
+  container.innerHTML = '';
+  list.forEach((item, idx)=>{
+    const card = document.createElement('div'); card.className='card'; card.dataset.index=idx;
+    const head = document.createElement('div'); head.className='q-head';
+    head.innerHTML = `<div><span class="qid">Q${idx+1}.</span> <span class="qtext">${item.q}</span></div>`;
+    const opts = document.createElement('div'); opts.className='opts';
+    item.opts.forEach((op,i)=>{
+      const id = `q${idx}_o${i}`;
+      const row = document.createElement('label'); row.className='opt'; row.htmlFor=id;
+      row.innerHTML = `<input type="radio" name="q${idx}" id="${id}" value="${i}"> <span><b>${String.fromCharCode(65+i)}.</b> ${op}</span>`;
+      opts.appendChild(row);
+    });
+    const exp = document.createElement('div'); exp.className='exp'; exp.id=`exp${idx}`;
+    exp.innerHTML = `<div><span class="badge good">Explanation (AR)</span></div>${item.exp}<div class="ref">Source: ${item.ref}</div>`;
+    card.appendChild(head); card.appendChild(opts); card.appendChild(exp);
+    container.appendChild(card);
   });
-  block.appendChild(opts);
-  quiz.appendChild(block);
-});
+}
+render();
 
-function showMousePhrase(){
-  const mouse = document.getElementById('mouse');
-  const toast = document.getElementById('toast');
-  const phrase = phrases[Math.floor(Math.random()*phrases.length)];
-  mouse.style.left = '18px';
-  toast.textContent = phrase;
-  toast.style.display = 'block';
-  // Delay to avoid immediate closing by same click
-  setTimeout(()=>{
-    document.addEventListener('click', hideToastOnce);
-  },200);
+// Submit & grade
+const scoreBox = document.getElementById('score');
+const note = document.getElementById('note');
+
+function grade(showExplanations=true){
+  let correct = 0;
+  QUESTIONS.forEach((item, idx)=>{
+    const chosen = document.querySelector(`input[name="q${idx}"]:checked`);
+    const exp = document.getElementById(`exp${idx}`);
+    const card = document.querySelector(`.card[data-index="${idx}"]`);
+    card.classList.remove('correct','wrong');
+    if(!chosen){
+      exp.classList.add('show');
+      exp.innerHTML = `<div><span class="badge bad">Unanswered</span></div>${item.exp}<div class="ref">Source: ${item.ref}</div>`;
+      continue;
+    }
+    const val = parseInt(chosen.value,10);
+    if(val===item.ans){
+      correct++;
+      card.classList.add('correct');
+      if(showExplanations){
+        exp.classList.add('show');
+        exp.innerHTML = `<div><span class="badge good">Correct</span></div>${item.exp}<div class="ref">Source: ${item.ref}</div>`;
+      }
+    }else{
+      card.classList.add('wrong');
+      exp.classList.add('show');
+      const correctLetter = String.fromCharCode(65+item.ans);
+      exp.innerHTML = `<div><span class="badge bad">Incorrect</span></div><div><b>Correct answer: ${correctLetter}. ${item.opts[item.ans]}</b></div><div style="margin-top:6px">${item.exp}</div><div class="ref">Source: ${item.ref}</div>`;
+    }
+  });
+  scoreBox.textContent = `${correct} / ${QUESTIONS.length}`;
+  note.textContent = `Submitted at ${new Date().toLocaleString()}`;
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 
-function hideToastOnce(e){
-  const mouse = document.getElementById('mouse');
-  const toast = document.getElementById('toast');
-  if(e.target.id==='toast' || e.target.id==='mouse') return;
-  mouse.style.left='-360px';
-  toast.style.display='none';
-  document.removeEventListener('click', hideToastOnce);
-}
+document.getElementById('submitBtn').addEventListener('click', ()=> grade(true));
 
-document.getElementById('calc').addEventListener('click', ()=>{
-  const total = questions.length;
-  const percent = Math.round((score/total)*100);
-  document.getElementById('score').textContent = `Your Score: ${score} / ${total} (${percent}%)`;
+// Reveal correct answers without changing selections
+document.getElementById('showAnswersBtn').addEventListener('click', ()=>{
+  QUESTIONS.forEach((item, idx)=>{
+    const exp = document.getElementById(`exp${idx}`);
+    exp.classList.add('show');
+    const correctLetter = String.fromCharCode(65+item.ans);
+    exp.innerHTML = `<div><span class="badge good">Answer</span></div><div><b>${correctLetter}. ${item.opts[item.ans]}</b></div><div style="margin-top:6px">${item.exp}</div><div class="ref">Source: ${item.ref}</div>`;
+  });
+  note.textContent = 'Answers revealed (not graded)';
 });
 
-document.getElementById('reset').addEventListener('click', ()=>{
-  window.location.reload();
+// Reset
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('input[type="radio"]').forEach(i=> i.checked=false);
+  document.querySelectorAll('.exp').forEach(e=>{e.classList.remove('show'); e.innerHTML='';});
+  document.querySelectorAll('.card').forEach(c=> c.classList.remove('correct','wrong'));
+  scoreBox.textContent = `0 / ${QUESTIONS.length}`;
+  note.textContent = 'Not submitted';
+  window.scrollTo({top:0, behavior:'smooth'});
 });
 
+// Filter/search
+const search = document.getElementById('search');
+search.addEventListener('input', (e)=>{
+  const term = e.target.value.trim().toLowerCase();
+  if(!term){ render(); return;}
+  const filtered = QUESTIONS.filter(x => (x.q + ' ' + x.opts.join(' ')+ ' ' + x.ref).toLowerCase().includes(term));
+  render(filtered);
+  note.textContent = `Filter: ${filtered.length} shown of ${QUESTIONS.length}`;
+});
+
+// Export results
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const results = QUESTIONS.map((item, idx)=>{
+    const chosen = document.querySelector(`input[name="q${idx}"]:checked`);
+    const ansLetter = String.fromCharCode(65+item.ans);
+    return {
+      id: idx+1,
+      question: item.q,
+      options: item.opts,
+      correct: {index:item.ans, letter:ansLetter, text:item.opts[item.ans]},
+      chosen: chosen? {index:+chosen.value, letter:String.fromCharCode(65+ +chosen.value), text:item.opts[+chosen.value]} : null,
+      ref: item.ref
+    };
+  });
+  const blob = new Blob([JSON.stringify({timestamp: new Date().toISOString(), total: QUESTIONS.length, results}, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'microbiology_exam_results.json';
+  a.click();
+  URL.revokeObjectURL(url);
+});
 </script>
 </body>
 </html>
-
